@@ -154,12 +154,12 @@ export default function Index() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brown/80 via-brown/50 to-transparent flex items-center">
           <div className="container mx-auto px-6">
-            <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Durham, NC</p>
+            <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Durham Region</p>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-cream max-w-lg leading-tight">
               Celebrating Culture,<br />Building Community
             </h2>
             <p className="font-body text-cream/75 mt-4 max-w-md">
-              Join hundreds of families across the Triangle area who celebrate festivals, learn yoga,
+              Join hundreds of families who celebrate festivals, learn yoga,
               and give back through HCCD.
             </p>
             <Link
