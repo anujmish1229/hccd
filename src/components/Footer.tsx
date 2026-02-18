@@ -1,51 +1,74 @@
-import { Link } from "react-router-dom";
-import { Heart, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUp, Instagram, Facebook } from "lucide-react";
 
-const Footer = () => {
+export default function Footer() {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
-    <footer className="bg-primary text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo and Mission */}
-          <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Om_symbol-white.svg/1987px-Om_symbol-white.svg.png" alt="Om symbol" className="w-6 h-6" />
-              </div>
-              <div>
-                <div className="font-bold text-lg">Hindu Community Centre</div>
-                <div className="text-sm opacity-90">of Durham</div>
-              </div>
-            </div>
+    <footer className="bg-brown text-primary-foreground">
+      {/* Top row */}
+      <div className="container mx-auto px-6 py-8 flex items-start justify-between">
+        {/* Social links */}
+        <div className="flex flex-col gap-3">
+          <p className="font-body text-xs uppercase tracking-widest text-gold/70 mb-1">Connect With Us</p>
+          <div className="flex gap-4">
+            <a
+              href="https://www.instagram.com/hccd_durham/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
+            >
+              <Instagram size={18} />
+              <span className="hidden sm:inline">Instagram</span>
+            </a>
+            <a
+              href="https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Eventbrite"
+              className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
+            >
+              {/* Eventbrite icon (custom SVG) */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.893 13.688H9.984v.008c.062 1.418 1.057 2.336 2.5 2.336 1.035 0 1.848-.426 2.324-1.188h2.906c-.664 2.094-2.555 3.375-5.25 3.375-3.313 0-5.586-2.227-5.586-5.484 0-3.211 2.273-5.484 5.531-5.484 3.313 0 5.508 2.36 5.508 5.484 0 .317-.023.624-.024.953zm-2.625-1.758c-.117-1.273-1.031-2.133-2.437-2.133-1.313 0-2.282.797-2.5 2.133h4.937z"/>
+              </svg>
+              <span className="hidden sm:inline">Eventbrite</span>
+            </a>
+            <a
+              href="https://www.facebook.com/hccd.durham"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
+            >
+              <Facebook size={18} />
+              <span className="hidden sm:inline">Facebook</span>
+            </a>
           </div>
-
-          {/* Contact Info */}
-          <div>
-            <div className="space-y-3">
-              <div className="flex space-x-2 text-white/80">
-                <Mail className="w-4 h-4" />
-                <span className="text-sm">info@hccdurham.org</span>
-              </div>
-              <div className="flex items-center space-x-2 text-white/80">
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm">Durham Region, Ontario</span>
-              </div>
-              <div className="flex items-center space-x-2 text-white/80">
-                <Phone className="w-4 h-4" />
-                <span className="text-sm">Contact us for details</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/20 mt-8 pt-8 text-center">
-          <p className="text-white/70 text-sm">
-            © 2024 Hindu Community Centre of Durham. All rights reserved.
+          <p className="font-body text-xs text-cream/40 mt-2">
+            © {new Date().getFullYear()} HCCD · All rights reserved
           </p>
         </div>
+
+        {/* Up arrow */}
+        <button
+          onClick={scrollToTop}
+          aria-label="Back to top"
+          className="p-3 rounded-full border border-cream/20 text-cream/70 hover:border-gold hover:text-gold hover:bg-gold/10 transition-all duration-200"
+        >
+          <ArrowUp size={20} />
+        </button>
+      </div>
+
+      {/* Full-width org name */}
+      <div className="border-t border-cream/10 py-6 px-6 overflow-hidden">
+        <p
+          className="font-display font-bold text-cream/15 text-center whitespace-nowrap select-none"
+          style={{ fontSize: "clamp(2rem, 7vw, 6rem)", letterSpacing: "0.05em" }}
+        >
+          Hindu Community Center of Durham
+        </p>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
