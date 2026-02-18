@@ -40,11 +40,39 @@ export default function Events() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const res = await fetch("/.netlify/functions/events"); // call the serverless function
-        const data: EventItem[] = await res.json();
-        setEvents(data);
+        // Using Netlify public token or public Eventbrite API
+        const organizerId = process.env.EVENTBRITE_ORGANIZER_ID;
+        const publicToken = process.env.EVENTBRITE_PUBLIC_TOKEN;
+
+        const res = await fetch(
+          `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?expand=venue&token=${publicToken}`
+        );
+        const data = await res.json();
+
+        const now = new Date();
+        const normalized: EventItem[] = data.events.map((e: any) => {
+          const start = new Date(e.start.utc);
+          const end = new Date(e.end.utc);
+          const isPast = end < now;
+
+          return {
+            id: e.id,
+            name: e.name?.text ?? "",
+            description: e.description?.text ?? "",
+            start: e.start.utc,
+            end: e.end.utc,
+            status: isPast ? "past" : "upcoming",
+            venue: e.venue
+              ? `${e.venue.name ?? ""}, ${e.venue.address?.localized_address_display ?? ""}`
+              : "TBA",
+            image: e.logo?.url ?? null,
+            url: e.url,
+          };
+        });
+
+        setEvents(normalized);
       } catch (err) {
-        console.error("Failed to load events:", err);
+        console.error("Failed to fetch events:", err);
       } finally {
         setLoading(false);
       }
