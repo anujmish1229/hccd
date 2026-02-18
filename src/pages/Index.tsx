@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import heroTemple from "@/assets/hero-temple.jpg";
 import community from "@/assets/community.jpg";
 import mandala from "@/assets/mandala.png";
 
 const overviewCards = [
   {
     title: "About Us",
-    description: "A vibrant community rooted in Hindu values, celebrating culture, spirituality, and togetherness in the Triangle area.",
+    description: "A vibrant community rooted in Hindu values, celebrating culture, spirituality, and togetherness.",
     link: "/about",
     icon: "🪔",
   },
@@ -17,7 +18,7 @@ const overviewCards = [
   },
   {
     title: "Get in Touch",
-    description: "Have questions or want to collaborate? Reach out to us anytime — we'd love to hear from you.",
+    description: "Have questions or want to collaborate? Reach out to us anytime, we'd love to hear from you.",
     link: "/contact",
     icon: "✉️",
   },
@@ -62,7 +63,7 @@ export default function Index() {
 
               <p className="font-body text-lg text-foreground/75 leading-relaxed mb-10 max-w-lg">
                 Celebrating the richness of Hindu heritage, fostering community bonds, and
-                creating a welcoming home for all in the Durham Region.
+                creating a welcoming home for all in the Triangle area of North Carolina.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -84,6 +85,15 @@ export default function Index() {
             {/* Right: image with translucent frame */}
             <div className="relative animate-fade-in flex justify-center lg:justify-end">
               <div className="relative">
+                {/* Decorative frame */}
+                <div className="absolute -inset-4 rounded-3xl border-2 border-saffron/20 rotate-2" />
+                <div className="absolute -inset-4 rounded-3xl border border-gold/30 -rotate-2" />
+                <img
+                  src={heroTemple}
+                  alt="Hindu temple representing HCCD community"
+                  className="relative w-full max-w-md lg:max-w-lg rounded-2xl object-cover shadow-[0_20px_60px_-10px_hsl(25_40%_12%/0.3)]"
+                  style={{ height: "440px" }}
+                />
                 {/* Translucent badge */}
                 <div className="absolute bottom-5 left-5 right-5 bg-brown/60 backdrop-blur-sm rounded-xl px-5 py-3 border border-cream/10">
                   <p className="font-display text-cream/90 text-sm italic">
@@ -92,13 +102,6 @@ export default function Index() {
                   <p className="font-body text-gold/80 text-xs mt-0.5">The World Is One Family</p>
                 </div>
               </div>
-              {/* Mandala decoration */}
-              <img
-                src={mandala}
-                alt=""
-                aria-hidden
-                className="absolute -bottom-10 -right-10 w-40 opacity-15 pointer-events-none"
-              />
             </div>
           </div>
         </div>
@@ -117,9 +120,6 @@ export default function Index() {
             <h2 className="font-display text-4xl sm:text-5xl font-semibold text-foreground mb-4">
               A Community Built on <em>Seva</em> & Belonging
             </h2>
-            <p className="font-body text-muted-foreground max-w-xl mx-auto">
-              From celebrations to cultural education, HCCD is your home away from home in Durham, ON.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -154,7 +154,7 @@ export default function Index() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brown/80 via-brown/50 to-transparent flex items-center">
           <div className="container mx-auto px-6">
-            <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Durham, ON</p>
+            <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Durham, NC</p>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-cream max-w-lg leading-tight">
               Celebrating Culture,<br />Building Community
             </h2>

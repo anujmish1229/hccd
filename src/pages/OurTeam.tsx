@@ -8,7 +8,7 @@ const founder = {
   name: "Anuj Mishra",
   role: "Founder & President",
   image: anujImg,
-  bio: "Anuj Mishra is the founder of HCCD. Fill in bio here.",
+  bio: "Hey! I'm Anuj, the founder of HCCD. My vision for HCCD is to create a vibrant community space where we can celebrate our culture, support each other, and make a positive impact in our city. I started HCCD because I believe in the power of community and wanted to create a platform for us to connect, learn, and grow together. When I'm not working on HCCD, you can find me exploring new cuisines, building robots, or planning our next big event!",
 };
 
 const boardMembers = [
@@ -16,13 +16,13 @@ const boardMembers = [
     name: "Nidhi Mishra",
     role: "Board Member",
     image: nidhiImg,
-    bio: "Board member bio goes here.",
+    bio: "Hi. I'm Nidhi, a board member at HCCD. I joined the board because I wanted to contribute to our community and help shape the future of HCCD. My background is in community organizing and event planning, so I bring that experience to the table as we plan our programs and initiatives. I'm passionate about creating inclusive spaces where everyone feels welcome and valued.",
   },
   {
     name: "Mukesh Mishra",
     role: "Board Member",
     image: mukeshImg,
-    bio: "Board member bio goes here.",
+    bio: "Hello, I'm Mukesh, a board member at HCCD. I joined the board to support Anuj's vision and to help ensure that HCCD remains a sustainable and impactful organization. I'm committed to making sure that HCCD can continue to serve our community for years to come.",
   },
 ];
 
@@ -144,9 +144,9 @@ export default function OurTeam() {
           {/* Volunteer stats */}
           <div className="grid grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto text-center">
             {[
-              { value: "0+", label: "Active Volunteers" },
-              { value: "0+", label: "Hours Donated" },
-              { value: "0+", label: "Events Supported" },
+              { value: "20+", label: "Active Volunteers" },
+              { value: "100+", label: "Hours Donated" },
+              { value: "5+", label: "Events Supported" },
             ].map((s) => (
               <div key={s.label} className="bg-card border border-border rounded-2xl p-6 shadow-card">
                 <p className="font-display text-4xl font-bold text-saffron">{s.value}</p>

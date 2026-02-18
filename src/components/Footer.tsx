@@ -61,7 +61,7 @@ export default function Footer() {
       </div>
 
       {/* Full-width org name */}
-      <div className="border-t border-cream/10 py-6 px-6 overflow-hidden">
+      <div className="py-6 px-6 overflow-hidden">
         <p
           className="font-display font-bold text-cream/15 text-center whitespace-nowrap select-none"
           style={{ fontSize: "clamp(2rem, 7vw, 6rem)", letterSpacing: "0.05em" }}

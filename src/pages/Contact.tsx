@@ -143,7 +143,7 @@ export default function Contact() {
                       required
                       value={form.contact}
                       onChange={handleChange}
-                      placeholder="email@example.com or (919) 555-0000"
+                      placeholder="email@example.com or (905) 555-0000"
                       className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
                     />
                   </div>
