@@ -1,4 +1,4 @@
-import community from "@/assets/community.jpg";
+import volunteers from "@/assets/volunteers.jpg";
 import mandala from "@/assets/mandala.png";
 
 const values = [
@@ -13,7 +13,7 @@ const values = [
 const impacts = [
   { number: "50+", label: "Families Served" },
   { number: "5+", label: "Events per Year" },
-  { number: "1", label: "Year Strong" },
+  { number: "1st", label: "Year Strong" },
   { number: "20+", label: "Active Volunteers" },
 ];
 
@@ -31,7 +31,7 @@ export default function About() {
           <div className="w-16 h-1 rounded bg-gold mb-6" />
           <p className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed">
             The Hindu Community Center of Durham (HCCD) is a non-profit organization serving the
-            Hindu community of Durham.
+            Hindu community of the Durham Region.
           </p>
         </div>
       </section>
@@ -47,7 +47,7 @@ export default function About() {
               <p className="font-body text-foreground/80 leading-relaxed mb-5">
                 Founded with a vision to create a welcoming home for the Hindu community in Durham,
                 HCCD was born from the simple belief expressed in the ancient Sanskrit phrase
-                <em className="text-saffron"> "Vasudhaiva Kutumbakam"</em> - the world is one family.
+                <em className="text-saffron"> "Vasudhaiva Kutumbakam"</em> — the world is one family.
               </p>
               <p className="font-body text-foreground/80 leading-relaxed mb-5">
                 We are a growing community of families, students, professionals, and elders who share
@@ -56,19 +56,19 @@ export default function About() {
               </p>
               <p className="font-body text-foreground/80 leading-relaxed">
                 Whether you are a long-time practitioner of Hindu traditions or simply curious about
-                Hindu culture, HCCD extends an open invitation to all who wish to explore, connect,
+                Indian culture, HCCD extends an open invitation to all who wish to explore, connect,
                 and grow together.
               </p>
             </div>
 
             <div className="relative">
               <img
-                src={community}
+                src={volunteers}
                 alt="HCCD community gathering"
                 className="rounded-2xl shadow-[0_8px_40px_-8px_hsl(25_40%_12%/0.2)] w-full object-cover h-80"
               />
               <div className="absolute -bottom-6 -left-6 bg-saffron text-primary-foreground rounded-xl p-5 shadow-warm">
-                <p className="font-display text-3xl font-bold">1</p>
+                <p className="font-display text-3xl font-bold">1st</p>
                 <p className="font-body text-sm text-primary-foreground/80">Year Serving Durham</p>
               </div>
             </div>
