@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Cormorant Garamond", "serif"],
+        body: ["DM Sans", "sans-serif"],
+        sans: ["DM Sans", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,15 +52,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Hindu-inspired colors
-        saffron: {
-          DEFAULT: "hsl(var(--saffron))",
-          light: "hsl(var(--saffron-light))",
-        },
-        deepRed: "hsl(var(--deep-red))",
-        gold: "hsl(var(--gold))",
-        lotusPink: "hsl(var(--lotus-pink))",
-        spiritualPurple: "hsl(var(--spiritual-purple))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -66,15 +62,31 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-      },
-      backgroundImage: {
-        'gradient-sunrise': 'var(--gradient-sunrise)',
-        'gradient-spiritual': 'var(--gradient-spiritual)', 
-        'gradient-warm': 'var(--gradient-warm)',
-      },
-      boxShadow: {
-        'warm': 'var(--shadow-warm)',
-        'glow': 'var(--shadow-glow)',
+        // HCCD custom palette
+        saffron: {
+          DEFAULT: "hsl(25, 90%, 50%)",
+          light: "hsl(25, 90%, 65%)",
+          dark: "hsl(25, 80%, 38%)",
+        },
+        gold: {
+          DEFAULT: "hsl(43, 95%, 52%)",
+          light: "hsl(43, 95%, 68%)",
+          dark: "hsl(43, 80%, 40%)",
+        },
+        maroon: {
+          DEFAULT: "hsl(0, 60%, 32%)",
+          light: "hsl(0, 50%, 48%)",
+          dark: "hsl(0, 65%, 22%)",
+        },
+        cream: {
+          DEFAULT: "hsl(40, 50%, 96%)",
+          dark: "hsl(38, 40%, 91%)",
+        },
+        brown: {
+          DEFAULT: "hsl(25, 40%, 12%)",
+          mid: "hsl(25, 30%, 25%)",
+          light: "hsl(25, 20%, 45%)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -83,25 +95,32 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in-left": {
+          from: { opacity: "0", transform: "translateX(-30px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "scale-in": {
+          from: { opacity: "0", transform: "scale(0.95)" },
+          to: { opacity: "1", transform: "scale(1)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.7s ease-out forwards",
+        "fade-in-left": "fade-in-left 0.7s ease-out forwards",
+        "scale-in": "scale-in 0.5s ease-out forwards",
       },
     },
   },
