@@ -63,7 +63,7 @@ export default function Index() {
 
               <p className="font-body text-lg text-foreground/75 leading-relaxed mb-10 max-w-lg">
                 Celebrating the richness of Hindu heritage, fostering community bonds, and
-                creating a welcoming home for all in the Triangle area of North Carolina.
+                creating a welcoming home for all.
               </p>
 
               <div className="flex flex-wrap gap-4">
