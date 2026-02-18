@@ -1,177 +1,186 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, MapPin, Users, ExternalLink } from "lucide-react";
-import { link } from "fs";
+import { useState, useEffect } from "react";
+import { Calendar, MapPin, ExternalLink, Clock } from "lucide-react";
+import mandala from "@/assets/mandala.png";
 
-const Events = () => {
-  const upcomingEvents = [
-    /*
-    {
-      title: "",
-      description: "",
-      date: "",
-      time: "",
-      location: "",
-      attendees: "",
-      category: "",
-      status: "",
-      link: ""
-    }
-    */
-  ];
+type EventStatus = "upcoming" | "past";
 
-  const pastEvents = [
-    {
-      title: "Outdoor Games Day",
-      description: "A fun-filled day of outdoor games and activities for the whole family.",
-      date: "August 17, 2025"
-    },
-    {
-      title: "Seniors Trip to Niagara Falls",
-      description: "A scenic trip for seniors to enjoy the beauty of Niagara Falls. This event was in collaboration with Senior Buddies.",
-      date: "September 15, 2025"
-    },
-    {
-      title: "HAND's Hindu Heritage Month Celebration",
-      description: "A celebration of Hindu culture, traditions, and community spirit during Hindu Heritage Month.",
-      date: "November 29, 2025",
+interface EventItem {
+  id: string;
+  name: string;
+  description: string;
+  start: string;
+  end: string;
+  venue: string;
+  status: EventStatus;
+  image: string | null;
+  url: string;
+}
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function formatTime(dateStr: string) {
+  return new Date(dateStr).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+export default function Events() {
+  const [tab, setTab] = useState<EventStatus>("upcoming");
+  const [events, setEvents] = useState<EventItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const res = await fetch("/.netlify/functions/events"); // call the serverless function
+        const data: EventItem[] = await res.json();
+        setEvents(data);
+      } catch (err) {
+        console.error("Failed to load events:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+
+    fetchEvents();
+  }, []);
+
+  const filtered = events.filter((e) => e.status === tab);
+
+  if (loading) {
+    return <main className="pt-32 text-center text-muted-foreground">Loading events…</main>;
+  }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-sunrise text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">Community Events</h1>
+    <main className="pt-20">
+      <section className="bg-cream-dark py-20 relative overflow-hidden">
+        <img
+          src={mandala}
+          alt=""
+          aria-hidden
+          className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none"
+        />
+        <div className="container mx-auto px-6 relative z-10">
+          <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">
+            Community Calendar
+          </p>
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-foreground mb-4">
+            <span className="text-saffron">Events</span>
+          </h1>
+          <div className="w-16 h-1 rounded bg-gold mb-6" />
+          <p className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            From festivals to workshops, HCCD brings the community together year-round.
+          </p>
+          <a
+            href="https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-6 bg-saffron text-primary-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-saffron-dark transition-colors shadow-warm"
+          >
+            <ExternalLink size={15} />
+            View All on Eventbrite
+          </a>
         </div>
       </section>
 
-      {/* Upcoming Events */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-primary mb-4">Upcoming Events</h2>
-            <p className="text-xl text-muted-foreground">Mark your calendars and join us for these special occasions</p>
+      <section className="py-12 bg-cream">
+        <div className="container mx-auto px-6">
+          <div className="flex gap-2 mb-10 border-b border-border pb-4">
+            {(["upcoming", "past"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`font-body font-semibold text-sm px-6 py-2.5 rounded-full transition-all ${
+                  tab === t
+                    ? "bg-saffron text-primary-foreground shadow-warm"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                }`}
+              >
+                {t.charAt(0).toUpperCase() + t.slice(1)} Events
+              </button>
+            ))}
           </div>
 
-          {upcomingEvents.length === 0 ? (
-            <div className="text-center py-16 mb-16">
-              <div className="max-w-2xl mx-auto">
-                <p className="text-lg text-muted-foreground/80 leading-relaxed italic">
-                  We're sorry, but there are no upcoming events scheduled at the moment. 
-                  Please check back later or contact us for more information.
-                </p>
-              </div>
+          {filtered.length === 0 ? (
+            <div className="text-center py-20 text-muted-foreground font-body">
+              <p className="text-4xl mb-4">🪷</p>
+              <p>No {tab} events at the moment. Check back soon!</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              {upcomingEvents.map((event, index) => (
-                <Card key={index} className="hover:shadow-warm transition-all duration-300 hover:-translate-y-1">
-                  <CardHeader>
-                    <div className="flex justify-between items-start mb-2">
-                      <Badge variant="secondary" className="bg-saffron text-white">
-                        {event.category}
-                      </Badge>
-                      <Badge variant="outline" className="text-saffron border-saffron">
-                        {event.status}
-                      </Badge>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {filtered.map((event) => (
+                <div
+                  key={event.id}
+                  className="bg-card border border-border rounded-2xl overflow-hidden shadow-card hover:shadow-warm hover:border-saffron/30 transition-all duration-300 hover:-translate-y-0.5 flex flex-col"
+                >
+                  {event.image ? (
+                    <img src={event.image} alt={event.name} className="w-full h-48 object-cover" />
+                  ) : (
+                    <div className="w-full h-48 bg-gradient-to-br from-saffron/20 to-gold/20 flex items-center justify-center">
+                      <span className="text-6xl opacity-40">🪔</span>
                     </div>
-                    <CardTitle className="text-2xl text-primary">{event.title}</CardTitle>
-                    <CardDescription className="text-base leading-relaxed">
-                      {event.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center text-muted-foreground">
-                        <Calendar className="w-5 h-5 mr-3 text-saffron" />
-                        <span>{event.date}</span>
-                      </div>
-                      <div className="flex items-center text-muted-foreground">
-                        <Clock className="w-5 h-5 mr-3 text-saffron" />
-                        <span>{event.time}</span>
-                      </div>
-                      <div className="flex items-center text-muted-foreground">
-                        <MapPin className="w-5 h-5 mr-3 text-saffron" />
-                        <span>{event.location}</span>
-                      </div>
-                      <div className="flex items-center text-muted-foreground">
-                        <Users className="w-5 h-5 mr-3 text-saffron" />
-                        <span>{event.attendees}</span>
-                      </div>
-                    </div>
-                    <Button 
-                      className="w-full bg-gradient-warm hover:opacity-90" 
-                      size="lg"
-                      onClick={() => window.open(`${event.link}`, '_blank')}
+                  )}
+
+                  <div className="p-6 flex flex-col flex-1">
+                    <span
+                      className={`inline-block text-xs font-body font-semibold uppercase tracking-wider px-3 py-1 rounded-full mb-3 w-fit ${
+                        event.status === "upcoming"
+                          ? "bg-saffron/10 text-saffron border border-saffron/20"
+                          : "bg-muted text-muted-foreground border border-border"
+                      }`}
                     >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Register on Eventbrite
-                    </Button>
-                  </CardContent>
-                </Card>
+                      {event.status === "upcoming" ? "Upcoming" : "Past Event"}
+                    </span>
+
+                    <h3 className="font-display text-2xl font-semibold text-foreground mb-3">
+                      {event.name}
+                    </h3>
+
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+                      {event.description}
+                    </p>
+
+                    <div className="space-y-2 border-t border-border pt-4 mt-auto">
+                      <div className="flex items-center gap-2 text-sm font-body text-foreground/70">
+                        <Calendar size={14} className="text-saffron flex-shrink-0" />
+                        <span>{formatDate(event.start)}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-body text-foreground/70">
+                        <Clock size={14} className="text-saffron flex-shrink-0" />
+                        <span>
+                          {formatTime(event.start)} – {formatTime(event.end)}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-body text-foreground/70">
+                        <MapPin size={14} className="text-saffron flex-shrink-0" />
+                        <span>{event.venue}</span>
+                      </div>
+                    </div>
+
+                    <a
+                      href={event.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex items-center gap-2 bg-saffron text-primary-foreground font-body font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-saffron-dark transition-colors w-fit shadow-warm"
+                    >
+                      <ExternalLink size={14} />
+                      {event.status === "upcoming" ? "Register on Eventbrite" : "View Details"}
+                    </a>
+                  </div>
+                </div>
               ))}
             </div>
           )}
-
-          {/* Eventbrite Integration */}
-          <div className="bg-card rounded-lg border p-8 text-center">
-            <h3 className="text-2xl font-semibold text-primary mb-4">Official Event Calendar</h3>
-            <p className="text-muted-foreground mb-6">
-              Check our Eventbrite page for the most current events and registration information. 
-              The events shown above are examples of what we typically organize.
-            </p>
-            <Button 
-              size="lg" 
-              className="bg-gradient-sunrise hover:opacity-90"
-              onClick={() => window.open('https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781', '_blank')}
-            >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              View Live Events on Eventbrite
-            </Button>
-          </div>
         </div>
       </section>
-
-      {/* Past Events */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-primary mb-4">Recent Celebrations</h2>
-            <p className="text-xl text-muted-foreground">
-              A glimpse of our recent community gatherings and celebrations
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pastEvents.map((event, index) => (
-              <Card key={index} className="text-center">
-                <CardHeader>
-                  <CardTitle className="text-xl text-primary">{event.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground">
-                    {event.date}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {event.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+    </main>
   );
-};
-
-export default Events;
+}
