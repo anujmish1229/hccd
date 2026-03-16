@@ -29,6 +29,7 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/yoga" element={<div ref={() => window.location.href = "https://www.zeffy.com/en-CA/ticketing/international-yoga-day-celebration-durham-region"} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
