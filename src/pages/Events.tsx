@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, MapPin, ExternalLink, Clock } from "lucide-react";
 import mandala from "@/assets/mandala.png";
 
 export default function Events() {
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
+  const [events, setEvents] = useState<any[]>([]);
 
-  const filtered: any[] = []; // No events for now
+  // Fetch events based on the selected tab
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const file = tab === "upcoming" ? "/src/assets/upcoming-events.json" : "/src/assets/past-events.json";
+      const response = await fetch(file);
+      const data = await response.json();
+      setEvents(data);
+    };
+
+    fetchEvents();
+  }, [tab]);
 
   return (
     <main className="pt-20">
@@ -48,10 +59,32 @@ export default function Events() {
             ))}
           </div>
 
-          <div className="text-center py-20 text-muted-foreground font-body">
-            <p className="text-4xl mb-4">🪷</p>
-            <p>No {tab} events at the moment. Check back soon!</p>
-          </div>
+          {events.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {events.map((event, index) => (
+                <div key={index} className="flex flex-col p-6 bg-white rounded-lg shadow-lg">
+                  <h3 className="font-semibold text-xl text-foreground mb-2">{event.name}</h3>
+                  <p className="text-muted-foreground mb-2">
+                    <Calendar className="inline mr-2" /> {event.date}
+                  </p>
+                  <p className="text-muted-foreground mb-2">
+                    <Clock className="inline mr-2" /> {event.time}
+                  </p>
+                  <p className="text-muted-foreground mb-2">
+                    <MapPin className="inline mr-2" /> {event.location}
+                  </p>
+                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-saffron hover:underline mt-4 flex items-center">
+                    <ExternalLink className="mr-2" /> View Event
+                  </a>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 text-muted-foreground font-body">
+              <p className="text-4xl mb-4">🪷</p>
+              <p>No {tab} events at the moment. Check back soon!</p>
+            </div>
+          )}
         </div>
       </section>
     </main>
