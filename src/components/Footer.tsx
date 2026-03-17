@@ -12,7 +12,7 @@ export default function Footer() {
           <p className="font-body text-xs uppercase tracking-widest text-gold/70 mb-1">Connect With Us</p>
           <div className="flex gap-4">
             <a
-              href="https://www.instagram.com/hccd_durham/"
+              href="https://www.instagram.com/hinducommunitycentre"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -35,7 +35,7 @@ export default function Footer() {
               <span className="hidden sm:inline">Eventbrite</span>
             </a>
             <a
-              href="https://www.facebook.com/hccd.durham"
+              href="https://www.facebook.com/share/1HjovQc5h3/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
