@@ -9,6 +9,7 @@ import OurTeam from "./pages/OurTeam";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import Join from "./pages/Join";
+import Redirect from "./pages/Redirect";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -29,7 +30,7 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/join" element={<Join />} />
-          <Route path="/yoga" element={<div ref={() => window.location.href = "https://www.zeffy.com/en-CA/ticketing/international-yoga-day-celebration-durham-region"} />} />
+          <Route path="/yoga" element={<Redirect to="https://www.zeffy.com/en-CA/ticketing/international-yoga-day-celebration-durham-region" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
