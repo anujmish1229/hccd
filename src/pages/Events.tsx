@@ -2,17 +2,43 @@ import { useState, useEffect } from "react";
 import { Calendar, MapPin, ExternalLink, Clock } from "lucide-react";
 import mandala from "@/assets/mandala.png";
 
+type EventType = {
+  name: string;
+  date: string;
+  time: string;
+  location: string;
+  link: string;
+};
+
 export default function Events() {
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
-  const [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<EventType[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch events based on the selected tab
   useEffect(() => {
     const fetchEvents = async () => {
-      const file = tab === "upcoming" ? "/src/assets/upcoming-events.json" : "/src/assets/past-events.json";
-      const response = await fetch(file);
-      const data = await response.json();
-      setEvents(data);
+      try {
+        setLoading(true);
+
+        const file =
+          tab === "upcoming"
+            ? "/upcoming-events.json"
+            : "/past-events.json";
+
+        const response = await fetch(file);
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        console.error("Error loading events:", err);
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchEvents();
@@ -59,11 +85,17 @@ export default function Events() {
             ))}
           </div>
 
-          {events.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-20 text-muted-foreground font-body">
+              <p>Loading events...</p>
+            </div>
+          ) : events.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {events.map((event, index) => (
                 <div key={index} className="flex flex-col p-6 bg-white rounded-lg shadow-lg">
-                  <h3 className="font-semibold text-xl text-foreground mb-2">{event.name}</h3>
+                  <h3 className="font-semibold text-xl text-foreground mb-2">
+                    {event.name}
+                  </h3>
                   <p className="text-muted-foreground mb-2">
                     <Calendar className="inline mr-2" /> {event.date}
                   </p>
@@ -73,7 +105,12 @@ export default function Events() {
                   <p className="text-muted-foreground mb-2">
                     <MapPin className="inline mr-2" /> {event.location}
                   </p>
-                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-saffron hover:underline mt-4 flex items-center">
+                  <a
+                    href={event.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-saffron hover:underline mt-4 flex items-center"
+                  >
                     <ExternalLink className="mr-2" /> View Event
                   </a>
                 </div>
