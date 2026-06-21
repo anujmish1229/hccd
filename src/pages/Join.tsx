@@ -5,6 +5,7 @@ import community from "@/assets/community.jpg";
 
 export default function Join() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -16,8 +17,22 @@ export default function Join() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setSubmitted(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      const body = new URLSearchParams(new FormData(e.currentTarget) as never).toString();
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+    } catch (err) {
+      console.error("Form submission error:", err);
+    } finally {
+      setSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   return (
@@ -178,10 +193,11 @@ export default function Join() {
 
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg"
+                  disabled={submitting}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Heart size={16} />
-                  Join HCCD
+                  {submitting ? "Submitting..." : "Join HCCD"}
                 </button>
 
                 <p className="font-body text-xs text-center text-muted-foreground">
