@@ -15,5 +15,18 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Netlify Forms: static declarations required for build-time detection in SPAs -->
+    <form name="hccd-contact" netlify netlify-honeypot="bot-field" hidden>
+      <input name="name" />
+      <input name="contact" />
+      <textarea name="message"></textarea>
+    </form>
+    <form name="hccd-join" netlify netlify-honeypot="bot-field" hidden>
+      <input name="fullName" />
+      <input name="email" />
+      <input name="phone" />
+      <textarea name="about"></textarea>
+    </form>
   </body>
 </html>

@@ -1,24 +1,60 @@
 import { useState } from "react";
-import { Send, CheckCircle } from "lucide-react";
+import { Send, CheckCircle, MessageCircle } from "lucide-react";
 import mandala from "@/assets/mandala.png";
+
+const WHATSAPP_GROUPS = [
+  {
+    label: "General Volunteers",
+    description: "Help us run our events and make a difference in the community",
+    link: "https://chat.whatsapp.com/Buy1nM95TYJ0ljNQpYbPQt",
+    emoji: "🏡",
+  },
+  {
+    label: "Events & Updates",
+    description: "Get notified about upcoming events",
+    link: "https://chat.whatsapp.com/CCPwog8RCW0DBF9yUivG3q",
+    emoji: "🎉",
+  },
+  {
+    label: "Youth Volunteers",
+    description: "Connect with other youth volunteers in the community  ",
+    link: "https://chat.whatsapp.com/CCPwog8RCW0DBF9yUivG3q",
+    emoji: "🙂",
+  },
+];
+
+type FormState = { name: string; contact: string; message: string };
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: "", contact: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState<FormState>({ name: "", contact: "", message: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // Netlify forms: real submission happens via Netlify — we just show success state
-    // The form will POST to Netlify on production
-    setSubmitted(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      const body = new URLSearchParams(new FormData(e.currentTarget) as never).toString();
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+    } catch (err) {
+      console.error("Form submission error:", err);
+    } finally {
+      setSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   return (
     <main className="pt-20">
-      {/* ── Page Header ─────────────────────────────── */}
+      {/* Header */}
       <section className="bg-cream-dark py-20 relative overflow-hidden">
         <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
         <div className="container mx-auto px-6 relative z-10">
@@ -33,7 +69,7 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ── Contact section ─────────────────────────── */}
+      {/* Contact section */}
       <section className="py-20 bg-cream">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
@@ -60,15 +96,15 @@ export default function Contact() {
                 <p className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-4">Follow Us</p>
                 <div className="flex gap-4">
                   <a href="https://www.instagram.com/hccd_durham/" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm">
+                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
                     IG
                   </a>
                   <a href="https://www.facebook.com/hccd.durham" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm">
+                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
                     FB
                   </a>
                   <a href="https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm">
+                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
                     EB
                   </a>
                 </div>
@@ -110,7 +146,6 @@ export default function Contact() {
                   onSubmit={handleSubmit}
                   className="bg-card border border-border rounded-3xl p-8 sm:p-10 shadow-card space-y-6"
                 >
-                  {/* Netlify hidden fields */}
                   <input type="hidden" name="form-name" value="hccd-contact" />
                   <p className="hidden">
                     <label>Don't fill this: <input name="bot-field" /></label>
@@ -166,13 +201,56 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg"
+                    disabled={submitting}
+                    className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <Send size={16} />
-                    Send Message
+                    {submitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WhatsApp Community */}
+      <section className="py-16 bg-cream-dark">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <MessageCircle className="w-6 h-6 text-saffron" />
+              <p className="font-body text-xs uppercase tracking-widest text-saffron">Stay Connected</p>
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-semibold text-foreground mb-4">
+              Join Our WhatsApp Community
+            </h2>
+            <p className="font-body text-muted-foreground mb-10 max-w-xl mx-auto">
+              Be the first to know about events, announcements, and community updates. Join one of our WhatsApp groups below.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-xl mx-auto">
+              {WHATSAPP_GROUPS.map((group) => (
+                <a
+                  key={group.label}
+                  href={group.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-6 hover:border-saffron/40 hover:shadow-warm hover:-translate-y-0.5 transition-all duration-200 shadow-card group"
+                >
+                  <span className="text-4xl">{group.emoji}</span>
+                  <div className="text-center">
+                    <p className="font-display text-lg font-semibold text-foreground group-hover:text-saffron transition-colors">
+                      {group.label}
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mt-1">{group.description}</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 bg-[#25D366] text-white font-body font-semibold text-sm px-5 py-2 rounded-full mt-1">
+                    <MessageCircle size={14} />
+                    Join Group
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </div>
