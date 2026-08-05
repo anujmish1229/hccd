@@ -1,25 +1,12 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Calendar, MapPin, ExternalLink, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
 import mandala from "@/assets/mandala.png";
-
-type EventType = {
-  name: string;
-  date: string;
-  time: string;
-  location: string;
-  link: string;
-  photo?: string;
-  description?: string;
-  detailedDescription?: string;
-};
+import { type EventType, slugify, fetchEvents, splitEvents, isEventPast } from "@/lib/events";
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00");
   return d.toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-}
-
-function slugify(name: string) {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 function useEventImages(eventName: string, fallbackPhoto?: string) {
@@ -181,7 +168,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
               className="inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-saffron-dark transition-colors shadow-warm"
             >
               <ExternalLink size={14} />
-              {isPast ? "View Details" : "Register Now"}
+              {isPast ? "View Details" : "Get Tickets"}
             </a>
           )}
         </div>
@@ -257,36 +244,55 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
 }
 
 export default function Events() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
-  const [events, setEvents] = useState<EventType[]>([]);
+  const [allEvents, setAllEvents] = useState<EventType[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const loadEvents = async () => {
       try {
         setLoading(true);
-        const file = tab === "upcoming" ? "/upcoming-events.json" : "/past-events.json";
-        const response = await fetch(file);
-        if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
-        setEvents(await response.json());
+        setAllEvents(await fetchEvents());
       } catch (err) {
         console.error("Error loading events:", err);
-        setEvents([]);
+        setAllEvents([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchEvents();
-  }, [tab]);
+    loadEvents();
+  }, []);
+
+  const { upcoming, past } = splitEvents(allEvents);
+  const events = tab === "upcoming" ? upcoming : past;
+
+  useEffect(() => {
+    const slug = searchParams.get("event");
+    if (!slug || allEvents.length === 0) return;
+    const match = allEvents.find((e) => slugify(e.name) === slug);
+    if (match) {
+      setTab(isEventPast(match) ? "past" : "upcoming");
+      setSelectedEvent(match);
+    }
+  }, [searchParams, allEvents]);
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+    if (searchParams.has("event")) {
+      searchParams.delete("event");
+      setSearchParams(searchParams, { replace: true });
+    }
+  };
 
   return (
     <main className="pt-20">
       {selectedEvent && (
         <EventModal
           event={selectedEvent}
-          isPast={tab === "past"}
-          onClose={() => setSelectedEvent(null)}
+          isPast={isEventPast(selectedEvent)}
+          onClose={closeModal}
         />
       )}
 
