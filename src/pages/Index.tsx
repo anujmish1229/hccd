@@ -1,7 +1,14 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import heroTemple from "@/assets/hero-temple.jpg";
 import community from "@/assets/community.jpg";
 import mandala from "@/assets/mandala.png";
+import { type EventType, fetchEvents, splitEvents } from "@/lib/events";
+
+function formatShortDate(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" });
+}
 
 const overviewCards = [
   {
@@ -31,6 +38,17 @@ const overviewCards = [
 ];
 
 export default function Index() {
+  const [nextEvent, setNextEvent] = useState<EventType | null>(null);
+
+  useEffect(() => {
+    fetchEvents()
+      .then((events) => {
+        const { upcoming } = splitEvents(events);
+        setNextEvent(upcoming[0] ?? null);
+      })
+      .catch((err) => console.error("Error loading events:", err));
+  }, []);
+
   return (
     <main id="top">
       {/* ── Hero ─────────────────────────────────────── */}
@@ -45,6 +63,17 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: text */}
             <div className="animate-fade-in-left">
+              {/* Upcoming event announcement pill */}
+              {nextEvent && (
+                <Link
+                  to="/events"
+                  className="inline-flex items-center gap-2 bg-saffron/10 border border-saffron/30 text-saffron font-body text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-5 hover:bg-saffron/20 transition-colors"
+                >
+                  <span className="w-2 h-2 rounded-full bg-saffron animate-pulse shrink-0" />
+                  Upcoming: {nextEvent.name} · {formatShortDate(nextEvent.date)}
+                </Link>
+              )}
+
               {/* Devanagari ornament */}
               <span className="inline-block text-saffron text-3xl mb-4 opacity-80">ॐ</span>
 
