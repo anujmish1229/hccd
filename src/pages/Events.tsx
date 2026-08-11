@@ -234,9 +234,23 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-1 text-saffron font-body font-semibold text-sm">
-          <span>View Details</span>
-          <ChevronRight size={14} />
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1 text-saffron font-body font-semibold text-sm">
+            <span>View Details</span>
+            <ChevronRight size={14} />
+          </div>
+          {event.link && (
+            <a
+              href={event.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 bg-saffron text-primary-foreground font-body font-semibold text-xs px-4 py-2 rounded-full hover:bg-saffron-dark transition-colors shadow-warm shrink-0"
+            >
+              <ExternalLink size={12} />
+              {isPast ? "Details" : "Get Tickets"}
+            </a>
+          )}
         </div>
       </div>
     </div>
