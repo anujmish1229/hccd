@@ -44,7 +44,7 @@ const roleBadgeStyles: Record<string, string> = {
   Ambassador: "bg-maroon text-cream",
 };
 
-const ambassadors: Person[] = [
+const volunteers: Person[] = {
   {
     name: "Priti Gandhi",
     role: "Ambassador",
@@ -58,28 +58,31 @@ const ambassadors: Person[] = [
     bio: "Placeholder bio for Shilpa Bhatt — update with her story, involvement with HCCD, and what being an ambassador means to her.",
   },
   {
-    name: "Kajal Pandya",
-    role: "Ambassador",
-    image: "/ambassador-photos/kajal-pandya.jpg",
-    bio: "Placeholder bio for Kajal Pandya — update with her story, involvement with HCCD, and what being an ambassador means to her.",
-  },
-  {
     name: "Hasit Bhatt",
     role: "Ambassador",
     image: "/ambassador-photos/hasit-bhatt.jpg",
     bio: "Placeholder bio for Hasit Bhatt — update with his story, involvement with HCCD, and what being an ambassador means to him.",
   },
   {
-    name: "Girish Pandey",
-    role: "Ambassador",
-    image: "/ambassador-photos/girish-pandey.jpg",
-    bio: "Placeholder bio for Girish Pandey — update with his story, involvement with HCCD, and what being an ambassador means to him.",
-  },
-  {
     name: "Kanchan Pandey",
     role: "Ambassador",
     image: "/ambassador-photos/kanchan-pandey.jpg",
     bio: "Placeholder bio for Kanchan Pandey — update with her story, involvement with HCCD, and what being an ambassador means to her.",
+  },
+}
+
+const ambassadors: Person[] = [
+  {
+    name: "Kajal Pandya",
+    role: "Ambassador",
+    image: "/ambassador-photos/kajal-pandya.jpg",
+    bio: "Placeholder bio for Kajal Pandya — update with her story, involvement with HCCD, and what being an ambassador means to her.",
+  },
+  {
+    name: "Girish Pandey",
+    role: "Ambassador",
+    image: "/ambassador-photos/girish-pandey.jpg",
+    bio: "Placeholder bio for Girish Pandey — update with his story, involvement with HCCD, and what being an ambassador means to him.",
   },
 ];
 
