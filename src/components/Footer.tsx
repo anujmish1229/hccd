@@ -12,7 +12,7 @@ export default function Footer() {
           <p className="font-body text-xs uppercase tracking-widest text-gold/70 mb-1">Connect With Us</p>
           <div className="flex gap-4">
             <a
-              href="https://www.instagram.com/hinducommunitycentre"
+              href="https://www.instagram.com/hinducommunitycentre/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"

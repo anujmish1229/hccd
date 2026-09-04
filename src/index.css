@@ -107,6 +107,9 @@
   .shadow-card {
     box-shadow: var(--shadow-card);
   }
+  .shadow-section {
+    box-shadow: inset 0 12px 20px -16px hsl(25 40% 12% / 0.15);
+  }
   .text-balance {
     text-wrap: balance;
   }

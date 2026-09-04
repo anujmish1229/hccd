@@ -1,17 +1,29 @@
+import { useState } from "react";
 import anujImg from "@/assets/anuj-mishra.jpg";
 import nidhiImg from "@/assets/nidhi-mishra.jpg";
 import mukeshImg from "@/assets/mukesh-mishra.jpg";
 import volunteersImg from "@/assets/volunteers.jpg";
 import mandala from "@/assets/mandala.png";
 
-const founder = {
-  name: "Anuj Mishra",
-  role: "Founder & President",
-  image: anujImg,
-  bio: "Hey! I'm Anuj, the founder of HCCD. My vision for HCCD is to create a vibrant community space where we can celebrate our culture, support each other, and make a positive impact in our city. I started HCCD because I believe in the power of community and wanted to create a platform for us to connect, learn, and grow together. When I'm not working on HCCD, you can find me exploring new cuisines, building robots, or planning our next big event!",
+type Person = {
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
 };
 
-const boardMembers = [
+// Archived — no longer displayed. Anuj is heading to university and stepping back from
+// representing HCCD day-to-day. Keeping his info here in case it's needed again later.
+const archivedTeam: Person[] = [
+  {
+    name: "Anuj Mishra",
+    role: "Founder & President",
+    image: anujImg,
+    bio: "Hey! I'm Anuj, the founder of HCCD. My vision for HCCD is to create a vibrant community space where we can celebrate our culture, support each other, and make a positive impact in our city. I started HCCD because I believe in the power of community and wanted to create a platform for us to connect, learn, and grow together. When I'm not working on HCCD, you can find me exploring new cuisines, building robots, or planning our next big event!",
+  },
+];
+
+const team: Person[] = [
   {
     name: "Nidhi Mishra",
     role: "Board Member",
@@ -26,9 +38,116 @@ const boardMembers = [
   },
 ];
 
+const roleBadgeStyles: Record<string, string> = {
+  "Founder & President": "bg-saffron text-primary-foreground",
+  "Board Member": "bg-gold text-brown",
+  Ambassador: "bg-maroon text-cream",
+};
+
+const ambassadors: Person[] = [
+  {
+    name: "Priti Gandhi",
+    role: "Ambassador",
+    image: "/ambassador-photos/priti-gandhi.jpg",
+    bio: "Placeholder bio for Priti Gandhi — update with her story, involvement with HCCD, and what being an ambassador means to her.",
+  },
+  {
+    name: "Shilpa Bhatt",
+    role: "Ambassador",
+    image: "/ambassador-photos/shilpa-bhatt.jpg",
+    bio: "Placeholder bio for Shilpa Bhatt — update with her story, involvement with HCCD, and what being an ambassador means to her.",
+  },
+  {
+    name: "Kajal Pandya",
+    role: "Ambassador",
+    image: "/ambassador-photos/kajal-pandya.jpg",
+    bio: "Placeholder bio for Kajal Pandya — update with her story, involvement with HCCD, and what being an ambassador means to her.",
+  },
+  {
+    name: "Hasit Bhatt",
+    role: "Ambassador",
+    image: "/ambassador-photos/hasit-bhatt.jpg",
+    bio: "Placeholder bio for Hasit Bhatt — update with his story, involvement with HCCD, and what being an ambassador means to him.",
+  },
+  {
+    name: "Girish Pandey",
+    role: "Ambassador",
+    image: "/ambassador-photos/girish-pandey.jpg",
+    bio: "Placeholder bio for Girish Pandey — update with his story, involvement with HCCD, and what being an ambassador means to him.",
+  },
+  {
+    name: "Kanchan Pandey",
+    role: "Ambassador",
+    image: "/ambassador-photos/kanchan-pandey.jpg",
+    bio: "Placeholder bio for Kanchan Pandey — update with her story, involvement with HCCD, and what being an ambassador means to her.",
+  },
+];
+
+const volunteerLabels: { name: string; x: number; y: number }[] = [
+  { name: "Harsh Patel", x: 19.3, y: 33.9 },
+  { name: "Aarush Patel", x: 31.1, y: 31.25 },
+  { name: "Yashvi Patel", x: 44.8, y: 43.2 },
+  { name: "Niva Pandya", x: 53.6, y: 41.1 },
+  { name: "Anuj Mishra", x: 72.1, y: 33.3 },
+  { name: "Tanishka Sharma", x: 83.5, y: 42.2 },
+];
+
+const MAX_PER_ROW = 3;
+const ambassadorRows: Person[][] = [];
+for (let i = 0; i < ambassadors.length; i += MAX_PER_ROW) {
+  ambassadorRows.push(ambassadors.slice(i, i + MAX_PER_ROW));
+}
+
+function PersonCard({ person }: { person: Person }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div className="group flex flex-col md:flex-row md:h-[26rem] shrink-0 md:transition-[margin] md:duration-500 md:ease-out md:hover:-mr-6">
+      {/* Image — fixed size always, never shrinks or grows, self or siblings */}
+      <div className="relative z-20 w-full h-96 md:h-full md:w-80 shrink-0 rounded-3xl overflow-hidden border border-border shadow-card">
+        {!imgError ? (
+          <img
+            src={person.image}
+            alt={person.name}
+            onError={() => setImgError(true)}
+            className="w-full h-full object-cover object-top"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-saffron/10 to-gold/10">
+            <span className="text-5xl opacity-40">🪷</span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-brown/85 via-brown/10 to-transparent" />
+        {/* Name + role — hidden on hover, replaced by the info panel */}
+        <div className="absolute bottom-5 left-5 right-5 transition-opacity duration-300 md:group-hover:opacity-0">
+          <h3 className="font-display text-xl font-bold text-white leading-tight drop-shadow-sm">
+            {person.name}
+          </h3>
+          <p className="font-body text-xs text-saffron uppercase tracking-wider font-semibold mt-1">
+            {person.role}
+          </p>
+        </div>
+      </div>
+
+      {/* Info panel — white, tucked behind the image's curve, flows out on hover */}
+      <div className="hidden md:block relative z-10 -ml-6 h-full shrink-0 overflow-hidden rounded-r-3xl border border-l-0 border-border bg-white shadow-card w-0 transition-[width] duration-500 ease-out group-hover:w-[calc(20rem+2.5rem)]">
+        <div className="w-[calc(20rem+2.5rem)] h-full pl-9 pr-7 py-7 flex flex-col items-start justify-start">
+          <span
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-body font-semibold uppercase tracking-wider mb-4 w-fit ${roleBadgeStyles[person.role]}`}
+          >
+            {person.role}
+          </span>
+          <h3 className="font-display text-2xl font-bold text-foreground mb-3">{person.name}</h3>
+          <p className="font-body text-sm text-muted-foreground leading-relaxed">{person.bio}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function OurTeam() {
   return (
-    <main className="pt-20">
+    <main className="pt-[65px]">
       {/* Page Header */}
       <section className="bg-cream-dark py-20 relative overflow-hidden">
         <img
@@ -51,71 +170,40 @@ export default function OurTeam() {
         </div>
       </section>
 
-      {/* Founder */}
-      <section className="py-20 bg-cream">
+      {/* Team */}
+      <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">
-              Leadership
+              Leadership &amp; Governance
             </p>
-            <h2 className="font-display text-4xl font-semibold text-foreground">Founder</h2>
+            <h2 className="font-display text-4xl font-semibold text-foreground">Meet the Team</h2>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-card hover:shadow-warm transition-all duration-300 flex flex-col md:flex-row">
-              <div className="md:w-80 flex-shrink-0">
-                <img
-                  src={founder.image}
-                  alt={founder.name}
-                  className="w-full h-72 md:h-full object-cover object-top"
-                />
-              </div>
-              <div className="p-8 flex flex-col justify-center">
-                <div className="inline-flex items-center gap-2 bg-saffron/10 border border-saffron/20 text-saffron rounded-full px-4 py-1.5 text-xs font-body font-semibold uppercase tracking-wider mb-4 w-fit">
-                  {founder.role}
-                </div>
-                <h3 className="font-display text-3xl font-bold text-foreground mb-4">{founder.name}</h3>
-                <p className="font-body text-muted-foreground leading-relaxed">{founder.bio}</p>
-                <div className="mt-6 h-px bg-gradient-to-r from-saffron/30 to-transparent" />
-              </div>
-            </div>
+          <div className="flex flex-col md:flex-row md:justify-center gap-6 md:gap-10 w-full">
+            {team.map((member) => (
+              <PersonCard key={member.name} person={member} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Board Members */}
-      <section className="py-20 bg-cream-dark">
+      {/* Ambassadors */}
+      <section className="py-20 bg-cream-dark shadow-section">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">
-              Governance
+              Community Ambassadors
             </p>
-            <h2 className="font-display text-4xl font-semibold text-foreground">Board Members</h2>
+            <h2 className="font-display text-4xl font-semibold text-foreground">Our Ambassadors</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {boardMembers.map((member) => (
-              <div
-                key={member.name}
-                className="bg-card border border-border rounded-3xl overflow-hidden shadow-card hover:shadow-warm hover:border-saffron/30 transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="relative">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-80 object-cover object-top"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brown/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
-                    <span className="bg-saffron text-primary-foreground text-xs font-body font-semibold uppercase tracking-wider px-3 py-1 rounded-full">
-                      {member.role}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-display text-2xl font-bold text-foreground mb-3">{member.name}</h3>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
-                </div>
+          <div className="flex flex-col gap-6 md:gap-10">
+            {ambassadorRows.map((row, i) => (
+              <div key={i} className="flex flex-col md:flex-row md:justify-center gap-6 md:gap-10 w-full">
+                {row.map((ambassador) => (
+                  <PersonCard key={ambassador.name} person={ambassador} />
+                ))}
               </div>
             ))}
           </div>
@@ -123,7 +211,7 @@ export default function OurTeam() {
       </section>
 
       {/* Volunteers */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Volunteers</p>
@@ -133,12 +221,21 @@ export default function OurTeam() {
             </p>
           </div>
 
-          <div className="relative rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_hsl(25_40%_12%/0.2)]">
+          <div className="group relative rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_hsl(25_40%_12%/0.2)]">
             <img
               src={volunteersImg}
               alt="HCCD volunteers at a community event"
-              className="w-full h-96 object-cover"
+              className="w-full aspect-video object-cover"
             />
+            {volunteerLabels.map((v) => (
+              <span
+                key={v.name}
+                style={{ left: `${v.x}%`, top: `${v.y}%` }}
+                className="absolute -translate-x-1/2 -translate-y-full -mt-2 bg-brown/85 text-cream text-xs font-body font-semibold px-2.5 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              >
+                {v.name}
+              </span>
+            ))}
           </div>
 
           {/* Volunteer stats */}

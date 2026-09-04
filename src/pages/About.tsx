@@ -19,7 +19,7 @@ const impacts = [
 
 export default function About() {
   return (
-    <main className="pt-20">
+    <main className="pt-[65px]">
       {/* ── Page Header ─────────────────────────────── */}
       <section className="bg-cream-dark py-20 relative overflow-hidden">
         <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
@@ -37,7 +37,7 @@ export default function About() {
       </section>
 
       {/* ── Introduction ────────────────────────────── */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -77,7 +77,7 @@ export default function About() {
       </section>
 
       {/* ── What We Do ──────────────────────────────── */}
-      <section className="py-20 bg-cream-dark relative overflow-hidden">
+      <section className="py-20 bg-cream-dark relative overflow-hidden shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-14">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Our Activities</p>
@@ -109,7 +109,7 @@ export default function About() {
       </section>
 
       {/* ── Our Values ──────────────────────────────── */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-14">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Guiding Principles</p>
@@ -130,7 +130,7 @@ export default function About() {
       </section>
 
       {/* ── Impact ──────────────────────────────────── */}
-      <section className="bg-brown py-16">
+      <section className="bg-brown py-16 shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-10">
             <h2 className="font-display text-4xl text-cream font-semibold">Our Impact</h2>
