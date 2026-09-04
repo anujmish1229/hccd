@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import heroTemple from "@/assets/hero-temple.jpg";
 import community from "@/assets/community.jpg";
 import mandala from "@/assets/mandala.png";
-import { type EventType, fetchEvents, splitEvents } from "@/lib/events";
+import { type EventType, fetchEvents, splitEvents, slugify } from "@/lib/events";
 
 function formatShortDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00");
@@ -66,7 +66,7 @@ export default function Index() {
               {/* Upcoming event announcement pill */}
               {nextEvent && (
                 <Link
-                  to="/events"
+                  to={`/events?event=${slugify(nextEvent.name)}`}
                   className="inline-flex items-center gap-2 bg-saffron/10 border border-saffron/30 text-saffron font-body text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-5 hover:bg-saffron/20 transition-colors"
                 >
                   <span className="w-2 h-2 rounded-full bg-saffron animate-pulse shrink-0" />
@@ -75,7 +75,9 @@ export default function Index() {
               )}
 
               {/* Devanagari ornament */}
-              <span className="inline-block text-saffron text-3xl mb-4 opacity-80">ॐ</span>
+              {!nextEvent && (
+                <span className="inline-block text-saffron text-3xl mb-4 opacity-80">ॐ</span>
+              )}
 
               <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold text-foreground leading-[1.08] mb-4">
                 Hindu Community
@@ -137,12 +139,12 @@ export default function Index() {
       </section>
 
       {/* ── Divider ──────────────────────────────────── */}
-      <div className="lotus-divider py-6 bg-cream-dark text-2xl tracking-[1rem]">
+      <div className="lotus-divider py-6 text-2xl tracking-[1rem] shadow-section">
         ✦ ✦ ✦
       </div>
 
       {/* ── Overview Cards ───────────────────────────── */}
-      <section className="bg-cream py-20">
+      <section className="bg-cream py-20 shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-14">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">What We Offer</p>
@@ -175,7 +177,7 @@ export default function Index() {
       </section>
 
       {/* ── Community highlight ──────────────────────── */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden shadow-section">
         <img
           src={community}
           alt="HCCD community celebration"

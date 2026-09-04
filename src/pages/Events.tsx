@@ -301,7 +301,7 @@ export default function Events() {
   };
 
   return (
-    <main className="pt-20">
+    <main className="pt-[65px]">
       {selectedEvent && (
         <EventModal
           event={selectedEvent}
@@ -324,7 +324,7 @@ export default function Events() {
         </div>
       </section>
 
-      <section className="py-12 bg-cream">
+      <section className="py-12 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="flex gap-2 mb-10 border-b border-border pb-4">
             {(["upcoming", "past"] as const).map((t) => (
@@ -348,9 +348,9 @@ export default function Events() {
             </div>
           ) : events.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {events.map((event, index) => (
+              {events.map((event) => (
                 <EventCard
-                  key={index}
+                  key={slugify(event.name)}
                   event={event}
                   isPast={tab === "past"}
                   onOpen={() => setSelectedEvent(event)}

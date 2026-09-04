@@ -36,7 +36,7 @@ export default function Join() {
   };
 
   return (
-    <main className="pt-20">
+    <main className="pt-[65px]">
       {/* ── Page Header ─────────────────────────────── */}
       <section className="relative overflow-hidden">
         <img src={community} alt="HCCD community" className="absolute inset-0 w-full h-full object-cover opacity-20" />
@@ -57,7 +57,7 @@ export default function Join() {
       </section>
 
       {/* ── Benefits ────────────────────────────────── */}
-      <section className="py-16 bg-cream-dark">
+      <section className="py-16 bg-cream-dark shadow-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto text-center">
             {[
@@ -76,7 +76,7 @@ export default function Join() {
       </section>
 
       {/* ── Join Form ───────────────────────────────── */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
@@ -210,7 +210,7 @@ export default function Join() {
       </section>
 
       {/* ── Closing quote ───────────────────────────── */}
-      <section className="bg-brown py-16 text-center">
+      <section className="bg-brown py-16 text-center shadow-section">
         <div className="container mx-auto px-6">
           <p className="font-display text-3xl sm:text-4xl text-cream font-medium italic mb-3">
             "वसुधैव कुटुम्बकम्"

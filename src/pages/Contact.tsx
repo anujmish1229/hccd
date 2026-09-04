@@ -53,7 +53,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="pt-20">
+    <main className="pt-[65px]">
       {/* Header */}
       <section className="bg-cream-dark py-20 relative overflow-hidden">
         <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
@@ -70,7 +70,7 @@ export default function Contact() {
       </section>
 
       {/* Contact section */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
             {/* Left: info */}
@@ -78,8 +78,8 @@ export default function Contact() {
               <div>
                 <h2 className="font-display text-3xl font-semibold text-foreground mb-6">Contact Information</h2>
                 {[
-                  { label: "Email", value: "hinducommunitycentre@gmail.com", icon: "✉️" },
-                  { label: "Location", value: "Durham Region, Ontario", icon: "📍" },
+                  { label: "Email", value: "info@hccd.ca", icon: "✉️" },
+                  { label: "Location", value: "Ajax, Ontario", icon: "📍" },
                 ].map((item) => (
                   <div key={item.label} className="flex gap-4 items-start mb-5">
                     <span className="text-2xl mt-0.5">{item.icon}</span>
@@ -95,11 +95,11 @@ export default function Contact() {
               <div className="border-t border-border pt-6">
                 <p className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-4">Follow Us</p>
                 <div className="flex gap-4">
-                  <a href="https://www.instagram.com/hccd_durham/" target="_blank" rel="noopener noreferrer"
+                  <a href="https://www.instagram.com/hinducommunitycentre/" target="_blank" rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
                     IG
                   </a>
-                  <a href="https://www.facebook.com/hccd.durham" target="_blank" rel="noopener noreferrer"
+                  <a href="https://www.facebook.com/share/1HjovQc5h3/" target="_blank" rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
                     FB
                   </a>
@@ -116,7 +116,7 @@ export default function Contact() {
                   "अतिथि देवो भव"
                 </p>
                 <p className="font-body text-sm text-muted-foreground mt-2">
-                  "The Guest is God" — we welcome every inquiry with open arms.
+                  "The Guest is God" - we welcome every inquiry with open arms.
                 </p>
               </div>
             </div>
@@ -215,9 +215,9 @@ export default function Contact() {
       </section>
 
       {/* WhatsApp Community */}
-      <section className="py-16 bg-cream-dark">
+      <section className="py-16 bg-cream-dark shadow-section">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center mb-10">
             <div className="flex items-center justify-center gap-3 mb-3">
               <MessageCircle className="w-6 h-6 text-saffron" />
               <p className="font-body text-xs uppercase tracking-widest text-saffron">Stay Connected</p>
@@ -225,33 +225,33 @@ export default function Contact() {
             <h2 className="font-display text-3xl sm:text-4xl font-semibold text-foreground mb-4">
               Join Our WhatsApp Community
             </h2>
-            <p className="font-body text-muted-foreground mb-10 max-w-xl mx-auto">
+            <p className="font-body text-muted-foreground max-w-xl mx-auto">
               Be the first to know about events, announcements, and community updates. Join one of our WhatsApp groups below.
             </p>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-xl mx-auto">
-              {WHATSAPP_GROUPS.map((group) => (
-                <a
-                  key={group.label}
-                  href={group.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-3 bg-card border border-border rounded-2xl p-6 hover:border-saffron/40 hover:shadow-warm hover:-translate-y-0.5 transition-all duration-200 shadow-card group"
-                >
-                  <span className="text-4xl">{group.emoji}</span>
-                  <div className="text-center">
-                    <p className="font-display text-lg font-semibold text-foreground group-hover:text-saffron transition-colors">
-                      {group.label}
-                    </p>
-                    <p className="font-body text-sm text-muted-foreground mt-1">{group.description}</p>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 bg-[#25D366] text-white font-body font-semibold text-sm px-5 py-2 rounded-full mt-1">
-                    <MessageCircle size={14} />
-                    Join Group
-                  </span>
-                </a>
-              ))}
-            </div>
+          <div className="flex flex-wrap justify-center gap-5 max-w-7xl mx-auto">
+            {WHATSAPP_GROUPS.map((group) => (
+              <a
+                key={group.label}
+                href={group.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full sm:w-[278px] shrink-0 flex-col items-center gap-3 bg-card border border-border rounded-2xl p-6 hover:border-saffron/40 hover:shadow-warm hover:-translate-y-0.5 transition-all duration-200 shadow-card group"
+              >
+                <span className="text-4xl">{group.emoji}</span>
+                <div className="text-center">
+                  <p className="font-display text-lg font-semibold text-foreground group-hover:text-saffron transition-colors">
+                    {group.label}
+                  </p>
+                  <p className="font-body text-sm text-muted-foreground mt-1">{group.description}</p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 bg-[#25D366] text-white font-body font-semibold text-sm px-5 py-2 rounded-full mt-1">
+                  <MessageCircle size={14} />
+                  Join Group
+                </span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
