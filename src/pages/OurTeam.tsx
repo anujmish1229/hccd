@@ -44,7 +44,7 @@ const roleBadgeStyles: Record<string, string> = {
   Ambassador: "bg-maroon text-cream",
 };
 
-const volunteers: Person[] = {
+const volunteers: Person[] = [
   {
     name: "Priti Gandhi",
     role: "Ambassador",
@@ -69,7 +69,7 @@ const volunteers: Person[] = {
     image: "/ambassador-photos/kanchan-pandey.jpg",
     bio: "Placeholder bio for Kanchan Pandey — update with her story, involvement with HCCD, and what being an ambassador means to her.",
   },
-};
+];
 
 const ambassadors: Person[] = [
   {
