@@ -73,6 +73,12 @@ const volunteers: Person[] = [
 
 const ambassadors: Person[] = [
   {
+    name: "Priyank Lakhiya",
+    role: "Ambassador",
+    image: "/ambassador-photos/priyank-lakhiya.jpg",
+    bio: "Placeholder bio for Priyank Lakhiya — update with his story, involvement with HCCD, and what being an ambassador means to him.",
+  },
+  {
     name: "Kajal Pandya",
     role: "Ambassador",
     image: "/ambassador-photos/kajal-pandya.jpg",
