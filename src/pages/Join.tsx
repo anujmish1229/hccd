@@ -40,7 +40,7 @@ export default function Join() {
       {/* ── Page Header ─────────────────────────────── */}
       <section className="relative overflow-hidden">
         <img src={community} alt="HCCD community" className="absolute inset-0 w-full h-full object-cover opacity-20" />
-        <div className="relative z-10 bg-gradient-to-br from-cream-dark via-cream to-cream py-24">
+        <div className="relative z-10 bg-linear-to-br from-cream-dark via-cream to-cream py-24">
           <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
           <div className="container mx-auto px-6 relative z-10">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Be Part of Something Beautiful</p>
@@ -139,7 +139,7 @@ export default function Join() {
                     value={form.fullName}
                     onChange={handleChange}
                     placeholder="Your full name"
-                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
+                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
                   />
                 </div>
 
@@ -155,7 +155,7 @@ export default function Join() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="you@example.com"
-                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
+                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
                   />
                 </div>
 
@@ -171,7 +171,7 @@ export default function Join() {
                     value={form.phone}
                     onChange={handleChange}
                     placeholder="(905) 555-0000"
-                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
+                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export default function Join() {
                     value={form.about}
                     onChange={handleChange}
                     placeholder="Share a little about yourself; your interests, how you heard about HCCD, how you'd like to get involved..."
-                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors resize-none"
+                    className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors resize-none"
                   />
                 </div>
 

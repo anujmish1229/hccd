@@ -163,7 +163,7 @@ export default function Contact() {
                       value={form.name}
                       onChange={handleChange}
                       placeholder="Your full name"
-                      className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
+                      className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
                     />
                   </div>
 
@@ -179,7 +179,7 @@ export default function Contact() {
                       value={form.contact}
                       onChange={handleChange}
                       placeholder="email@example.com or (905) 555-0000"
-                      className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
+                      className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors"
                     />
                   </div>
 
@@ -195,7 +195,7 @@ export default function Contact() {
                       value={form.message}
                       onChange={handleChange}
                       placeholder="Write your message here..."
-                      className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors resize-none"
+                      className="w-full font-body text-sm px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-colors resize-none"
                     />
                   </div>
 

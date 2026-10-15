@@ -111,7 +111,7 @@ function PersonCard({ person }: { person: Person }) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className="group flex flex-col md:flex-row md:h-[26rem] shrink-0 md:transition-[margin] md:duration-500 md:ease-out md:hover:-mr-6">
+    <div className="group flex flex-col md:flex-row md:h-104 shrink-0 md:transition-[margin] md:duration-500 md:ease-out md:hover:-mr-6">
       {/* Image — fixed size always, never shrinks or grows, self or siblings */}
       <div className="relative z-20 w-full h-96 md:h-full md:w-80 shrink-0 rounded-3xl overflow-hidden border border-border shadow-card">
         {!imgError ? (
@@ -122,14 +122,14 @@ function PersonCard({ person }: { person: Person }) {
             className="w-full h-full object-cover object-top"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-saffron/10 to-gold/10">
+          <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-saffron/10 to-gold/10">
             <span className="text-5xl opacity-40">🪷</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-brown/85 via-brown/10 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-brown/85 via-brown/10 to-transparent" />
         {/* Name + role — hidden on hover, replaced by the info panel */}
         <div className="absolute bottom-5 left-5 right-5 transition-opacity duration-300 md:group-hover:opacity-0">
-          <h3 className="font-display text-xl font-bold text-white leading-tight drop-shadow-sm">
+          <h3 className="font-display text-xl font-bold text-white leading-tight drop-shadow-xs">
             {person.name}
           </h3>
           <p className="font-body text-xs text-saffron uppercase tracking-wider font-semibold mt-1">
@@ -139,8 +139,8 @@ function PersonCard({ person }: { person: Person }) {
       </div>
 
       {/* Info panel — white, tucked behind the image's curve, flows out on hover */}
-      <div className="hidden md:block relative z-10 -ml-6 h-full shrink-0 overflow-hidden rounded-r-3xl border border-l-0 border-border bg-white shadow-card w-0 transition-[width] duration-500 ease-out group-hover:w-[calc(20rem+2.5rem)]">
-        <div className="w-[calc(20rem+2.5rem)] h-full pl-9 pr-7 py-7 flex flex-col items-start justify-start">
+      <div className="hidden md:block relative z-10 -ml-6 h-full shrink-0 overflow-hidden rounded-r-3xl border border-l-0 border-border bg-white shadow-card w-0 transition-[width] duration-500 ease-out group-hover:w-90">
+        <div className="w-90 h-full pl-9 pr-7 py-7 flex flex-col items-start justify-start">
           <span
             className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-body font-semibold uppercase tracking-wider mb-4 w-fit ${roleBadgeStyles[person.role]}`}
           >

@@ -48,7 +48,7 @@ function ImageCarousel({ images }: { images: string[] }) {
 
   if (images.length === 0) {
     return (
-      <div className="w-full aspect-video bg-gradient-to-br from-saffron/10 to-gold/10 flex items-center justify-center rounded-t-2xl">
+      <div className="w-full aspect-video bg-linear-to-br from-saffron/10 to-gold/10 flex items-center justify-center rounded-t-2xl">
         <span className="text-6xl opacity-30">🪷</span>
       </div>
     );
@@ -112,7 +112,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       onClick={onClose}
     >
       <div
@@ -197,12 +197,12 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-saffron/10 to-gold/10">
+          <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-saffron/10 to-gold/10">
             <span className="text-5xl opacity-40">🪷</span>
           </div>
         )}
         {isPast && (
-          <span className="absolute top-3 left-3 bg-brown/80 text-cream text-xs font-body font-semibold px-3 py-1 rounded-full backdrop-blur-sm">
+          <span className="absolute top-3 left-3 bg-brown/80 text-cream text-xs font-body font-semibold px-3 py-1 rounded-full backdrop-blur-xs">
             Past Event
           </span>
         )}

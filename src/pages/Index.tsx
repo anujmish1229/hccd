@@ -79,7 +79,7 @@ export default function Index() {
                 <span className="inline-block text-saffron text-3xl mb-4 opacity-80">ॐ</span>
               )}
 
-              <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold text-foreground leading-[1.08] mb-4">
+              <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold text-foreground leading-[1.08] sm:leading-none mb-4">
                 Hindu Community
                 <br />
                 <span className="text-saffron">Center of Durham</span>
@@ -126,7 +126,7 @@ export default function Index() {
                   style={{ height: "440px" }}
                 />
                 {/* Translucent badge */}
-                <div className="absolute bottom-5 left-5 right-5 bg-brown/60 backdrop-blur-sm rounded-xl px-5 py-3 border border-cream/10">
+                <div className="absolute bottom-5 left-5 right-5 bg-brown/60 backdrop-blur-xs rounded-xl px-5 py-3 border border-cream/10">
                   <p className="font-display text-cream/90 text-sm italic">
                     "वसुधैव कुटुम्बकम्"
                   </p>
@@ -183,10 +183,10 @@ export default function Index() {
           alt="HCCD community celebration"
           className="w-full h-80 sm:h-96 object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brown/80 via-brown/50 to-transparent flex items-center">
+        <div className="absolute inset-0 bg-linear-to-r from-brown/80 via-brown/50 to-transparent flex items-center">
           <div className="container mx-auto px-6">
             <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Durham Region</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-cream max-w-lg leading-tight">
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-cream max-w-lg leading-tight sm:leading-none">
               Celebrating Culture,<br />Building Community
             </h2>
             <p className="font-body text-cream/75 mt-4 max-w-md">
