@@ -1,4 +1,5 @@
-import { ArrowUp, Instagram, Facebook } from "lucide-react";
+import { ArrowUp } from "lucide-react";
+import { FacebookIcon, InstagramIcon } from "@/components/icons/BrandIcons";
 
 export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -18,7 +19,7 @@ export default function Footer() {
               aria-label="Instagram"
               className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
             >
-              <Instagram size={18} />
+              <InstagramIcon size={18} />
               <span className="hidden sm:inline">Instagram</span>
             </a>
             <a
@@ -41,7 +42,7 @@ export default function Footer() {
               aria-label="Facebook"
               className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
             >
-              <Facebook size={18} />
+              <FacebookIcon size={18} />
               <span className="hidden sm:inline">Facebook</span>
             </a>
           </div>
