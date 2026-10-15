@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import heroTemple from "@/assets/hero-temple.jpg";
 import community from "@/assets/community.jpg";
 import mandala from "@/assets/mandala.png";

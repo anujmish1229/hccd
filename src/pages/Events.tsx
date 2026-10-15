@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { Calendar, MapPin, ExternalLink, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
 import mandala from "@/assets/mandala.png";
 import { type EventType, slugify, fetchEvents, splitEvents, isEventPast } from "@/lib/events";
