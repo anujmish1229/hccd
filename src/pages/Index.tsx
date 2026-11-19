@@ -143,6 +143,41 @@ export default function Index() {
         ✦ ✦ ✦
       </div>
 
+      {/* ── Diwali drone show ────────────────────────── */}
+      <section className="bg-brown py-20 shadow-section">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+            <div className="lg:col-span-2">
+              <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Ajax–Durham Diwali Festival 2026</p>
+              <h2 className="font-display text-4xl sm:text-5xl font-semibold text-cream mb-4 leading-tight">
+                Durham Region's First Diwali Drone Show
+              </h2>
+              <p className="font-body text-cream/75 leading-relaxed mb-6">
+                On October 24, 2026, more than 3,500 people joined HCCD to celebrate the Festival of
+                Lights with live performances and a drone show that lit up the night sky.
+              </p>
+              <Link
+                to="/events?event=ajax-durham-diwali-festival"
+                className="inline-flex items-center gap-2 bg-gold text-brown font-body font-semibold px-7 py-3 rounded-full hover:bg-gold-light transition-colors"
+              >
+                Photos, Videos & Certificates
+              </Link>
+            </div>
+            <div className="lg:col-span-3">
+              <video
+                src="/event-videos/ajax-durham-diwali-festival/drone-show-full.mp4"
+                poster="/event-videos/ajax-durham-diwali-festival/drone-show-full.jpg"
+                controls
+                playsInline
+                preload="none"
+                aria-label="HCCD Diwali drone show video"
+                className="w-full aspect-video rounded-2xl bg-black shadow-[0_20px_60px_-10px_hsl(25_40%_5%/0.5)]"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Overview Cards ───────────────────────────── */}
       <section className="bg-cream py-20 shadow-section">
         <div className="container mx-auto px-6">

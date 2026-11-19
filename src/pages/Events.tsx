@@ -2,45 +2,11 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { Calendar, MapPin, ExternalLink, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
 import mandala from "@/assets/mandala.png";
-import { type EventType, slugify, fetchEvents, splitEvents, isEventPast } from "@/lib/events";
+import { type EventType, slugify, fetchEvents, splitEvents, isEventPast, eventImages } from "@/lib/events";
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00");
   return d.toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-}
-
-function useEventImages(eventName: string, fallbackPhoto?: string) {
-  const [images, setImages] = useState<string[]>([]);
-
-  useEffect(() => {
-    const slug = slugify(eventName);
-    const baseDir = `/event-photos/${slug}`;
-    const loaded: string[] = [];
-
-    const tryLoad = (src: string): Promise<boolean> =>
-      new Promise((resolve) => {
-        const img = new window.Image();
-        img.onload = () => { loaded.push(src); resolve(true); };
-        img.onerror = () => resolve(false);
-        img.src = src;
-      });
-
-    const loadAll = async () => {
-      for (let i = 1; i <= 20; i++) {
-        const ok = await tryLoad(`${baseDir}/${i}.jpg`);
-        if (!ok) break;
-      }
-      if (loaded.length === 0 && fallbackPhoto) {
-        setImages([fallbackPhoto]);
-      } else {
-        setImages(loaded);
-      }
-    };
-
-    loadAll();
-  }, [eventName, fallbackPhoto]);
-
-  return images;
 }
 
 function ImageCarousel({ images }: { images: string[] }) {
@@ -98,7 +64,7 @@ function ImageCarousel({ images }: { images: string[] }) {
 }
 
 function EventModal({ event, isPast, onClose }: { event: EventType; isPast: boolean; onClose: () => void }) {
-  const images = useEventImages(event.name, event.photo);
+  const images = eventImages(event);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -158,6 +124,48 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
             <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">
               {event.detailedDescription || event.description}
             </p>
+          )}
+
+          {event.videos && event.videos.length > 0 && (
+            <div className="mb-6">
+              <h3 className="font-display text-lg font-semibold text-foreground mb-3">Videos</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {event.videos.map((video) => (
+                  <figure key={video.src}>
+                    <video
+                      src={video.src}
+                      poster={video.poster}
+                      controls
+                      playsInline
+                      preload="none"
+                      className="w-full aspect-video rounded-lg bg-black object-contain"
+                    />
+                    {video.caption && (
+                      <figcaption className="font-body text-xs text-muted-foreground mt-1.5">{video.caption}</figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {event.certificates && event.certificates.length > 0 && (
+            <div className="mb-6">
+              <h3 className="font-display text-lg font-semibold text-foreground mb-3">Certificates of Recognition</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {event.certificates.map((cert) => (
+                  <a key={cert.src} href={cert.src} target="_blank" rel="noopener noreferrer" className="group block">
+                    <img
+                      src={cert.src}
+                      alt={`Certificate from ${cert.caption}`}
+                      loading="lazy"
+                      className="w-full aspect-3/4 object-cover rounded-lg border border-border group-hover:shadow-warm transition-shadow"
+                    />
+                    <span className="block font-body text-xs text-muted-foreground mt-1.5 leading-snug">{cert.caption}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
           )}
 
           {event.link && (
@@ -259,7 +267,7 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
 
 export default function Events() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
+  const [tab, setTab] = useState<"upcoming" | "past">("past");
   const [allEvents, setAllEvents] = useState<EventType[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
@@ -327,7 +335,7 @@ export default function Events() {
       <section className="py-12 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="flex gap-2 mb-10 border-b border-border pb-4">
-            {(["upcoming", "past"] as const).map((t) => (
+            {(["past", "upcoming"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}

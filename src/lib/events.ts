@@ -1,3 +1,14 @@
+export type EventVideo = {
+  src: string;
+  poster?: string;
+  caption?: string;
+};
+
+export type EventCertificate = {
+  src: string;
+  caption: string;
+};
+
 export type EventType = {
   name: string;
   date: string;
@@ -5,12 +16,21 @@ export type EventType = {
   location: string;
   link: string;
   photo?: string;
+  /** Gallery images, in display order. Falls back to `photo` when absent. */
+  photos?: string[];
+  videos?: EventVideo[];
+  certificates?: EventCertificate[];
   description?: string;
   detailedDescription?: string;
 };
 
 export function slugify(name: string) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+export function eventImages(event: EventType): string[] {
+  if (event.photos?.length) return event.photos;
+  return event.photo ? [event.photo] : [];
 }
 
 export function isEventPast(event: EventType, now: Date = new Date()) {

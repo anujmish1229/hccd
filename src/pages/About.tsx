@@ -67,10 +67,6 @@ export default function About() {
                 alt="HCCD community gathering"
                 className="rounded-2xl shadow-[0_8px_40px_-8px_hsl(25_40%_12%/0.2)] w-full object-cover h-80"
               />
-              <div className="absolute -bottom-6 -left-6 bg-saffron text-primary-foreground rounded-xl p-5 shadow-warm">
-                <p className="font-display text-3xl font-bold">1st</p>
-                <p className="font-body text-sm text-primary-foreground/80">Year Serving Durham</p>
-              </div>
             </div>
           </div>
         </div>

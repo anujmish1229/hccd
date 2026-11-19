@@ -33,12 +33,27 @@ describe("public/events.json", () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
-  it("only links to photos that exist in public/", () => {
-    const missing = events
-      .filter((e) => e.photo)
-      .filter((e) => !existsSync(join(publicDir, e.photo!.replace(/^\//, ""))))
-      .map((e) => `${e.name}: ${e.photo}`);
+  it("only links to photos, videos and certificates that exist in public/", () => {
+    const files = events.flatMap((e) =>
+      [
+        e.photo,
+        ...(e.photos ?? []),
+        ...(e.videos ?? []).flatMap((v) => [v.src, v.poster]),
+        ...(e.certificates ?? []).map((c) => c.src),
+      ]
+        .filter((f): f is string => Boolean(f))
+        .map((f) => [e.name, f] as const),
+    );
+    const missing = files
+      .filter(([, f]) => !existsSync(join(publicDir, f.replace(/^\//, ""))))
+      .map(([name, f]) => `${name}: ${f}`);
     expect(missing).toEqual([]);
+  });
+
+  it("gives every certificate a caption", () => {
+    for (const e of events) {
+      for (const c of e.certificates ?? []) expect(c.caption.trim(), `${e.name}: ${c.src}`).not.toBe("");
+    }
   });
 
   it("uses absolute https URLs for registration links", () => {

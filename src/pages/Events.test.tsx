@@ -50,32 +50,45 @@ describe("Events page", () => {
     vi.restoreAllMocks();
   });
 
-  it("loads events.json and shows only upcoming events by default", async () => {
+  it("loads events.json and shows only past events by default", async () => {
     const fetchSpy = mockFetch({ ok: true, json: async () => sampleEvents });
     renderEvents();
 
     expect(screen.getByText("Loading events...")).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { level: 3, name: "Diwali Mela" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { level: 3, name: "Holi Celebration" })).not.toBeInTheDocument();
+    expect(await screen.findByRole("heading", { level: 3, name: "Holi Celebration" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 3, name: "Diwali Mela" })).not.toBeInTheDocument();
     expect(fetchSpy).toHaveBeenCalledWith("/events.json");
   });
 
-  it("switches to past events when the Past Events tab is clicked", async () => {
+  it("switches to upcoming events when the Upcoming Events tab is clicked", async () => {
     mockFetch({ ok: true, json: async () => sampleEvents });
     renderEvents();
-    await screen.findByRole("heading", { level: 3, name: "Diwali Mela" });
+    await screen.findByRole("heading", { level: 3, name: "Holi Celebration" });
 
-    await userEvent.click(screen.getByRole("button", { name: "Past Events" }));
+    await userEvent.click(screen.getByRole("button", { name: "Upcoming Events" }));
 
-    expect(screen.getByRole("heading", { level: 3, name: "Holi Celebration" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { level: 3, name: "Diwali Mela" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3, name: "Diwali Mela" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 3, name: "Holi Celebration" })).not.toBeInTheDocument();
   });
 
   it("shows an empty state instead of crashing when events.json fails to load", async () => {
     mockFetch({ ok: false, status: 500 });
     renderEvents();
 
-    expect(await screen.findByText(/No upcoming events at the moment/)).toBeInTheDocument();
+    expect(await screen.findByText(/No past events at the moment/)).toBeInTheDocument();
+  });
+
+  it("shows an event's videos and certificates in its details", async () => {
+    const withMedia: EventType = {
+      ...sampleEvents[1],
+      videos: [{ src: "/event-videos/holi/1.mp4", caption: "Colour throw" }],
+      certificates: [{ src: "/event-photos/holi/certificates/1.jpg", caption: "Mayor of Pickering" }],
+    };
+    mockFetch({ ok: true, json: async () => [withMedia] });
+    renderEvents("/events?event=holi-celebration");
+
+    expect(await screen.findByText("Colour throw")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Certificate from Mayor of Pickering" })).toBeInTheDocument();
   });
 
   it("opens the matching event's details from a ?event= deep link", async () => {
