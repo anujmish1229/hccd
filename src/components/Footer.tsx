@@ -65,7 +65,7 @@ export default function Footer() {
       <div className="py-6 px-6 overflow-hidden">
         <p
           className="font-display font-bold text-cream/15 text-center whitespace-nowrap select-none"
-          style={{ fontSize: "clamp(2rem, 7vw, 6rem)", letterSpacing: "0.05em" }}
+          style={{ fontSize: "min(5vw, 6rem)", letterSpacing: "0.05em" }}
         >
           Hindu Community Center of Durham
         </p>
