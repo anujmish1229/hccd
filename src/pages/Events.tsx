@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { Calendar, MapPin, ExternalLink, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
 import mandala from "@/assets/mandala.png";
-import { type EventType, slugify, fetchEvents, splitEvents, isEventPast, eventImages } from "@/lib/events";
+import Lightbox, { type LightboxImage } from "@/components/Lightbox";
+import { type EventType, slugify, fetchEvents, splitEvents, isEventPast, eventImages, formatEventDate } from "@/lib/events";
 
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-}
-
-function ImageCarousel({ images }: { images: string[] }) {
+function ImageCarousel({ images, onOpen }: { images: string[]; onOpen: (index: number) => void }) {
   const [current, setCurrent] = useState(0);
+  // Tall images (flyers) are shown whole instead of cropped to the 16:9 frame.
+  const [portrait, setPortrait] = useState<Record<number, boolean>>({});
 
   if (images.length === 0) {
     return (
@@ -25,12 +23,23 @@ function ImageCarousel({ images }: { images: string[] }) {
 
   return (
     <div className="relative w-full aspect-video bg-black overflow-hidden rounded-t-2xl">
-      <img
-        key={current}
-        src={images[current]}
-        alt={`Photo ${current + 1}`}
-        className="w-full h-full object-cover"
-      />
+      <button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); onOpen(current); }}
+        className="block w-full h-full cursor-zoom-in"
+        aria-label={`View photo ${current + 1} full screen`}
+      >
+        <img
+          key={current}
+          src={images[current]}
+          alt={`Photo ${current + 1}`}
+          onLoad={(e) => {
+            const img = e.currentTarget;
+            setPortrait((p) => ({ ...p, [current]: img.naturalHeight > img.naturalWidth }));
+          }}
+          className={`w-full h-full ${portrait[current] ? "object-contain" : "object-cover"}`}
+        />
+      </button>
       {images.length > 1 && (
         <>
           <button
@@ -65,6 +74,7 @@ function ImageCarousel({ images }: { images: string[] }) {
 
 function EventModal({ event, isPast, onClose }: { event: EventType; isPast: boolean; onClose: () => void }) {
   const images = eventImages(event);
+  const [lightbox, setLightbox] = useState<{ images: LightboxImage[]; index: number } | null>(null);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -81,6 +91,9 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       onClick={onClose}
     >
+      {lightbox && (
+        <Lightbox images={lightbox.images} startIndex={lightbox.index} onClose={() => setLightbox(null)} />
+      )}
       <div
         className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
@@ -93,7 +106,10 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
           <X size={18} />
         </button>
 
-        <ImageCarousel images={images} />
+        <ImageCarousel
+          images={images}
+          onOpen={(index) => setLightbox({ images: images.map((src) => ({ src, caption: event.name })), index })}
+        />
 
         <div className="p-6">
           {isPast && (
@@ -108,7 +124,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
           <div className="space-y-2.5 mb-5 pb-5 border-b border-border">
             <div className="flex items-center gap-2 text-sm text-muted-foreground font-body">
               <Calendar size={14} className="text-saffron shrink-0" />
-              <span>{formatDate(event.date)}</span>
+              <span>{formatEventDate(event)}</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground font-body">
               <Clock size={14} className="text-saffron shrink-0" />
@@ -153,8 +169,13 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
             <div className="mb-6">
               <h3 className="font-display text-lg font-semibold text-foreground mb-3">Certificates of Recognition</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {event.certificates.map((cert) => (
-                  <a key={cert.src} href={cert.src} target="_blank" rel="noopener noreferrer" className="group block">
+                {event.certificates.map((cert, i, certs) => (
+                  <button
+                    type="button"
+                    key={cert.src}
+                    onClick={() => setLightbox({ images: certs.map((c) => ({ src: c.src, caption: c.caption })), index: i })}
+                    className="group block text-left cursor-zoom-in"
+                  >
                     <img
                       src={cert.src}
                       alt={`Certificate from ${cert.caption}`}
@@ -162,7 +183,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
                       className="w-full aspect-3/4 object-cover rounded-lg border border-border group-hover:shadow-warm transition-shadow"
                     />
                     <span className="block font-body text-xs text-muted-foreground mt-1.5 leading-snug">{cert.caption}</span>
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
@@ -202,7 +223,7 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
             src={event.photo}
             alt={event.name}
             onError={() => setImgError(true)}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-saffron/10 to-gold/10">
@@ -230,7 +251,7 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
         <div className="space-y-2 mt-auto pt-4 border-t border-border">
           <div className="flex items-center gap-2 text-sm text-muted-foreground font-body">
             <Calendar size={14} className="text-saffron shrink-0" />
-            <span>{formatDate(event.date)}</span>
+            <span>{formatEventDate(event)}</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground font-body">
             <Clock size={14} className="text-saffron shrink-0" />

@@ -1,12 +1,37 @@
 [
   {
+    "name": "Festive Charity Food & Gift Drive",
+    "date": "2026-11-12",
+    "endDate": "2026-12-15",
+    "time": "Drop off any time during the drive",
+    "location": "Drop-off locations in Ajax, Pickering and Whitby",
+    "link": "",
+    "photo": "/event-photos/festive-charity-food-gift-drive/1.jpg",
+    "description": "Celebrate the spirit of Diwali through kindness, generosity and Seva. Donate food and unopened toys at drop-off points across Durham Region.",
+    "detailedDescription": "Share Food • Spread Happiness • Serve Humanity\n\nCelebrate the spirit of Diwali through kindness, generosity and Seva. From November 12 to December 15, 2026, HCCD is collecting food and gift donations for families in need.\n\nDonations needed:\n• Non-perishable vegetarian food items\n• Cereals\n• Pulses / Daal\n• Canned food\n• Rice & flour\n• Other shelf-stable vegetarian food items\n• Unopened toys and gifts\n\nDrop-off locations:\nAjax\n• 51 Weston Crescent (Nidhi Ji), 647 909 4041\n• 43 Crellin Street (Pt Shukla Ji), 647 550 2828\nPickering\n• 1507 Dusty Drive (Lata Ji), 647 771 6948\n• 2510 Tillings Rd (Kajal Ji), 647 308 1911\nWhitby\n• 18 Bassett Blvd (Priyank Ji), 519 591 9069\n\nGiving back to our community: 100% of collected food donations will be donated to local food banks to support families and individuals in need. Gifts and toys will be donated to Durham Children's Aid Foundation – Holiday Hope.\n\nFor bulk pick-up, please contact hinducommunitycentre@gmail.com.\n\nTogether we can make a difference!"
+  },
+  {
+    "name": "Rangoli: An Art Form of Culture & Creativity",
+    "date": "2026-11-28",
+    "time": "2:00 PM to 3:00 PM",
+    "location": "George Ashe Library, Quiet Study Room, Pickering, ON",
+    "link": "https://pickeringlibrary.ca/childrens",
+    "photo": "/event-photos/rangoli-an-art-form-of-culture-creativity/1.jpg",
+    "description": "A hands-on family workshop with Pickering Public Library exploring the traditions and techniques of Rangoli.",
+    "detailedDescription": "Join HCCD and Pickering Public Library for a vibrant and interactive celebration of Hindu heritage!\n\nFamilies will learn about the cultural traditions and significance of Rangoli and explore different ways of creating these colourful designs. They will also have the opportunity to demonstrate and create Rangoli using a variety of colours, patterns, techniques and regional styles.\n\nThis is a children's program. Register through Pickering Public Library at pickeringlibrary.ca/childrens."
+  },
+  {
     "name": "Bus Trip to Canada Welcomes Modi Ji",
     "date": "2026-12-11",
     "time": "Times to be announced",
     "location": "Round-trip school bus from Durham Region",
-    "link": "",
+    "link": "https://www.zeffy.com/en-CA/ticketing/canada-welcomes-modi-ji-bus-registration",
     "description": "Ride with HCCD on a round-trip school bus to the Canada Welcomes Modi Ji event. $12.50 per person both ways.",
-    "detailedDescription": "HCCD is running a round-trip school bus to the Canada Welcomes Modi Ji event.\n\nThe fare is $12.50 per person, both ways. Seats go to the first 45 people who complete their e-transfer. If there is more interest, a second bus may be added at about $15 per person.\n\nTo reserve a seat, reach out to us through our Contact page."
+    "detailedDescription": "HCCD is running a round-trip school bus to the Canada Welcomes Modi Ji event.\n\nThe fare is $12.50 per person, both ways. Seats go to the first 45 people who complete their e-transfer. If there is more interest, a second bus may be added at about $15 per person.\n\nTo reserve a seat, register through Zeffy using the Get Tickets button below.",
+    "photo": "/event-photos/bus-trip-to-canada-welcomes-modi-ji/2.jpg",
+    "photos": [
+      "/event-photos/bus-trip-to-canada-welcomes-modi-ji/2.jpg"
+    ]
   },
   {
     "name": "Indian Independence Day Flag Raising",

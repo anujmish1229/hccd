@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type EventType, isEventPast, slugify, splitEvents } from "./events";
+import { type EventType, formatEventDate, formatShortEventDate, isEventPast, slugify, splitEvents } from "./events";
 
 const event = (name: string, date: string): EventType => ({
   name,
@@ -61,5 +61,20 @@ describe("splitEvents", () => {
     const copy = [...events];
     splitEvents(events, now);
     expect(events).toEqual(copy);
+  });
+});
+
+describe("multi-day events", () => {
+  const drive: EventType = { ...event("Food Drive", "2026-11-12"), endDate: "2026-12-15" };
+
+  it("stays upcoming until its last day is over", () => {
+    expect(isEventPast(drive, new Date("2026-11-23T12:00:00"))).toBe(false);
+    expect(isEventPast(drive, new Date("2026-12-15T20:00:00"))).toBe(false);
+    expect(isEventPast(drive, new Date("2026-12-16T00:00:01"))).toBe(true);
+  });
+
+  it("formats the date range", () => {
+    expect(formatEventDate(drive)).toBe("November 12 – December 15, 2026");
+    expect(formatShortEventDate(drive)).toBe("Nov 12 – Dec 15, 2026");
   });
 });

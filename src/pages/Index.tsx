@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import heroTemple from "@/assets/hero-temple.jpg";
+import heroDrone from "@/assets/hero-diwali-drone.jpg";
 import community from "@/assets/community.jpg";
 import mandala from "@/assets/mandala.png";
-import { type EventType, fetchEvents, splitEvents, slugify } from "@/lib/events";
-
-function formatShortDate(dateStr: string) {
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" });
-}
+import { type EventType, fetchEvents, splitEvents, slugify, formatShortEventDate } from "@/lib/events";
 
 const overviewCards = [
   {
@@ -19,7 +14,7 @@ const overviewCards = [
   },
   {
     title: "Our Team",
-    description: "Led by passionate founders and board members dedicated to building an inclusive community for all.",
+    description: "Meet the dedicated volunteers who give their time and heart to build an inclusive community for all.",
     link: "/team",
     icon: "🤝",
   },
@@ -70,7 +65,7 @@ export default function Index() {
                   className="inline-flex items-center gap-2 bg-saffron/10 border border-saffron/30 text-saffron font-body text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-5 hover:bg-saffron/20 transition-colors"
                 >
                   <span className="w-2 h-2 rounded-full bg-saffron animate-pulse shrink-0" />
-                  Upcoming: {nextEvent.name} · {formatShortDate(nextEvent.date)}
+                  Upcoming: {nextEvent.name} · {formatShortEventDate(nextEvent)}
                 </Link>
               )}
 
@@ -120,9 +115,9 @@ export default function Index() {
                 <div className="absolute -inset-4 rounded-3xl border-2 border-saffron/20 rotate-2" />
                 <div className="absolute -inset-4 rounded-3xl border border-gold/30 -rotate-2" />
                 <img
-                  src={heroTemple}
-                  alt="Hindu temple representing HCCD community"
-                  className="relative w-full max-w-md lg:max-w-lg rounded-2xl object-cover shadow-[0_20px_60px_-10px_hsl(25_40%_12%/0.3)]"
+                  src={heroDrone}
+                  alt="Om and diya formed by drones at the HCCD Diwali drone show"
+                  className="relative w-full max-w-md lg:max-w-lg rounded-2xl object-cover object-[44%_center] bg-black shadow-[0_20px_60px_-10px_hsl(25_40%_12%/0.3)]"
                   style={{ height: "440px" }}
                 />
                 {/* Translucent badge */}
@@ -162,6 +157,14 @@ export default function Index() {
               >
                 Photos, Videos & Certificates
               </Link>
+              <a
+                href="https://diwalifestdurham.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-gold/60 text-gold font-body font-semibold px-7 py-3 rounded-full hover:bg-gold/10 transition-colors mt-3 sm:mt-0 sm:ml-3"
+              >
+                Visit the Diwali Festival Site ↗
+              </a>
             </div>
             <div className="lg:col-span-3">
               <video

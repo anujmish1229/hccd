@@ -46,6 +46,14 @@ export default function Footer() {
               <span className="hidden sm:inline">Facebook</span>
             </a>
           </div>
+          <a
+            href="https://diwalifestdurham.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-body text-sm text-gold/90 hover:text-gold transition-colors"
+          >
+            Durham Diwali Festival ↗
+          </a>
           <p className="font-body text-xs text-cream/40 mt-2">
             © {new Date().getFullYear()} HCCD · All rights reserved
           </p>

@@ -10,6 +10,9 @@ import OurTeam from "./pages/OurTeam";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import Join from "./pages/Join";
+import Sponsors from "./pages/Sponsors";
+import Partners from "./pages/Partners";
+import Donate from "./pages/Donate";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -39,6 +42,9 @@ const App = () => (
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/sponsors" element={<Sponsors />} />
+          <Route path="/partners" element={<Partners />} />
+          <Route path="/donate" element={<Donate />} />
           <Route path="/yoga" element={<Navigate to="/events?event=international-yoga-day-celebration" replace />} />
           <Route path="/garba" element={<Navigate to="/events?event=navratri-garba-night" replace />} />
           <Route path="*" element={<NotFound />} />

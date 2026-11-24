@@ -2,15 +2,21 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
 import mandala from "@/assets/mandala.png";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Our Team", to: "/team" },
   { label: "Events", to: "/events" },
+  { label: "Sponsors", to: "/sponsors" },
+  { label: "Partners", to: "/partners" },
   { label: "Contact", to: "/contact" },
+  { label: "Donate", to: "/donate" },
   { label: "Join", to: "/join" },
 ];
+
+const DIWALI_SITE = "https://diwalifestdurham.netlify.app/";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -48,28 +54,41 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Links */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden xl:flex items-center gap-0.5">
           {navLinks.map((link) => {
             const active = location.pathname === link.to;
             return (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`font-body text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 ${
+                className={cn(
+                  "font-body text-sm font-medium px-3 py-2 rounded-full whitespace-nowrap transition-all duration-200",
                   active
                     ? "bg-saffron text-primary-foreground"
-                    : "text-foreground hover:bg-saffron/10 hover:text-saffron"
-                } ${link.label === "Join" ? "ml-2 bg-saffron text-primary-foreground hover:bg-saffron-dark hover:text-primary-foreground shadow-warm" : ""}`}
+                    : "text-foreground hover:bg-saffron/10 hover:text-saffron",
+                  link.label === "Donate" && "ml-1 border border-saffron",
+                  link.label === "Donate" && !active && "text-saffron",
+                  link.label === "Join" &&
+                    "ml-1 bg-saffron text-primary-foreground hover:bg-saffron-dark hover:text-primary-foreground shadow-warm",
+                )}
               >
                 {link.label}
               </Link>
             );
           })}
+          <a
+            href={DIWALI_SITE}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-body text-sm font-medium px-3 py-2 rounded-full whitespace-nowrap text-maroon hover:bg-saffron/10 transition-all duration-200"
+          >
+            Diwali Fest ↗
+          </a>
         </nav>
 
         {/* Mobile toggle */}
         <button
-          className="lg:hidden p-2 rounded-lg text-foreground hover:bg-saffron/10"
+          className="xl:hidden p-2 rounded-lg text-foreground hover:bg-saffron/10"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -79,7 +98,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden navbar-glass border-t border-border">
+        <div className="xl:hidden navbar-glass border-t border-border">
           <nav className="container mx-auto px-6 py-4 flex flex-col gap-1">
             {navLinks.map((link) => {
               const active = location.pathname === link.to;
@@ -97,6 +116,14 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <a
+              href={DIWALI_SITE}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-body text-sm font-medium px-4 py-3 rounded-lg text-maroon hover:bg-saffron/10 transition-all duration-200"
+            >
+              Durham Diwali Festival ↗
+            </a>
           </nav>
         </div>
       )}

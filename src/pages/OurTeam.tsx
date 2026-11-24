@@ -5,91 +5,21 @@ import mukeshImg from "@/assets/mukesh-mishra.jpg";
 import volunteersImg from "@/assets/volunteers.jpg";
 import mandala from "@/assets/mandala.png";
 
-type Person = {
+type Member = {
   name: string;
-  role: string;
   image: string;
-  bio: string;
 };
 
-// Archived — no longer displayed. Anuj is heading to university and stepping back from
-// representing HCCD day-to-day. Keeping his info here in case it's needed again later.
-const archivedTeam: Person[] = [
-  {
-    name: "Anuj Mishra",
-    role: "Founder & President",
-    image: anujImg,
-    bio: "Hey! I'm Anuj, the founder of HCCD. My vision for HCCD is to create a vibrant community space where we can celebrate our culture, support each other, and make a positive impact in our city. I started HCCD because I believe in the power of community and wanted to create a platform for us to connect, learn, and grow together. When I'm not working on HCCD, you can find me exploring new cuisines, building robots, or planning our next big event!",
-  },
-];
-
-const team: Person[] = [
-  {
-    name: "Nidhi Mishra",
-    role: "Board Member",
-    image: nidhiImg,
-    bio: "Hi. I'm Nidhi, a board member at HCCD. I joined the board because I wanted to contribute to our community and help shape the future of HCCD. My background is in community organizing and event planning, so I bring that experience to the table as we plan our programs and initiatives. I'm passionate about creating inclusive spaces where everyone feels welcome and valued.",
-  },
-  {
-    name: "Mukesh Mishra",
-    role: "Board Member",
-    image: mukeshImg,
-    bio: "Hello, I'm Mukesh, a board member at HCCD. I joined the board to support Anuj's vision and to help ensure that HCCD remains a sustainable and impactful organization. I'm committed to making sure that HCCD can continue to serve our community for years to come.",
-  },
-];
-
-const roleBadgeStyles: Record<string, string> = {
-  "Founder & President": "bg-saffron text-primary-foreground",
-  "Board Member": "bg-gold text-brown",
-  Ambassador: "bg-maroon text-cream",
-};
-
-const volunteers: Person[] = [
-  {
-    name: "Priti Gandhi",
-    role: "Ambassador",
-    image: "/ambassador-photos/priti-gandhi.jpg",
-    bio: "Placeholder bio for Priti Gandhi — update with her story, involvement with HCCD, and what being an ambassador means to her.",
-  },
-  {
-    name: "Shilpa Bhatt",
-    role: "Ambassador",
-    image: "/ambassador-photos/shilpa-bhatt.jpg",
-    bio: "Placeholder bio for Shilpa Bhatt — update with her story, involvement with HCCD, and what being an ambassador means to her.",
-  },
-  {
-    name: "Hasit Bhatt",
-    role: "Ambassador",
-    image: "/ambassador-photos/hasit-bhatt.jpg",
-    bio: "Placeholder bio for Hasit Bhatt — update with his story, involvement with HCCD, and what being an ambassador means to him.",
-  },
-  {
-    name: "Kanchan Pandey",
-    role: "Ambassador",
-    image: "/ambassador-photos/kanchan-pandey.jpg",
-    bio: "Placeholder bio for Kanchan Pandey — update with her story, involvement with HCCD, and what being an ambassador means to her.",
-  },
-];
-
-const ambassadors: Person[] = [
-  {
-    name: "Priyank Lakhiya",
-    role: "Ambassador",
-    image: "/ambassador-photos/priyank-lakhiya.jpg",
-    bio: "Placeholder bio for Priyank Lakhiya — update with his story, involvement with HCCD, and what being an ambassador means to him.",
-  },
-  {
-    name: "Kajal Pandya",
-    role: "Ambassador",
-    image: "/ambassador-photos/kajal-pandya.jpg",
-    bio: "Placeholder bio for Kajal Pandya — update with her story, involvement with HCCD, and what being an ambassador means to her.",
-  },
-  {
-    name: "Girish Pandey",
-    role: "Ambassador",
-    image: "/ambassador-photos/girish-pandey.jpg",
-    bio: "Placeholder bio for Girish Pandey — update with his story, involvement with HCCD, and what being an ambassador means to him.",
-  },
+// Order as provided by HCCD. Portfolios and bios will be added later.
+const team: Member[] = [
+  { name: "Anuj Mishra", image: anujImg },
+  { name: "Priyank Lakhia", image: "/ambassador-photos/priyank-lakhia.jpg" },
+  { name: "Kajal Pandya", image: "/ambassador-photos/kajal-pandya.jpg" },
+  { name: "Nidhi Mishra", image: nidhiImg },
+  { name: "Lata Sharma", image: "/ambassador-photos/lata-sharma.jpg" },
+  { name: "Priti Gandhi", image: "/ambassador-photos/priti-gandhi.jpg" },
+  { name: "Kiran M", image: "/ambassador-photos/kiran-m.jpg" },
+  { name: "Mukesh Mishra", image: mukeshImg },
 ];
 
 const volunteerLabels: { name: string; x: number; y: number }[] = [
@@ -101,56 +31,44 @@ const volunteerLabels: { name: string; x: number; y: number }[] = [
   { name: "Tanishka Sharma", x: 83.5, y: 42.2 },
 ];
 
-const MAX_PER_ROW = 3;
-const ambassadorRows: Person[][] = [];
-for (let i = 0; i < ambassadors.length; i += MAX_PER_ROW) {
-  ambassadorRows.push(ambassadors.slice(i, i + MAX_PER_ROW));
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 }
 
-function PersonCard({ person }: { person: Person }) {
+function MemberCard({ member }: { member: Member }) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className="group flex flex-col md:flex-row md:h-104 shrink-0 md:transition-[margin] md:duration-500 md:ease-out md:hover:-mr-6">
-      {/* Image — fixed size always, never shrinks or grows, self or siblings */}
-      <div className="relative z-20 w-full h-96 md:h-full md:w-80 shrink-0 rounded-3xl overflow-hidden border border-border shadow-card">
+    <figure className="group">
+      <div className="relative aspect-4/5 rounded-3xl overflow-hidden border border-border shadow-card bg-cream-dark transition-all duration-300 group-hover:shadow-warm group-hover:-translate-y-1">
         {!imgError ? (
           <img
-            src={person.image}
-            alt={person.name}
+            src={member.image}
+            alt={member.name}
+            loading="lazy"
             onError={() => setImgError(true)}
             className="w-full h-full object-cover object-top"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-saffron/10 to-gold/10">
-            <span className="text-5xl opacity-40">🪷</span>
+          <div
+            className="w-full h-full flex flex-col items-center justify-center gap-3 bg-linear-to-br from-saffron/15 to-gold/20"
+            aria-label={`${member.name}, photo coming soon`}
+            role="img"
+          >
+            <span className="font-display text-6xl font-semibold text-saffron/70">{initials(member.name)}</span>
+            <span className="font-body text-[11px] uppercase tracking-widest text-brown-mid/60">Photo coming soon</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-linear-to-t from-brown/85 via-brown/10 to-transparent" />
-        {/* Name + role — hidden on hover, replaced by the info panel */}
-        <div className="absolute bottom-5 left-5 right-5 transition-opacity duration-300 md:group-hover:opacity-0">
-          <h3 className="font-display text-xl font-bold text-white leading-tight drop-shadow-xs">
-            {person.name}
-          </h3>
-          <p className="font-body text-xs text-saffron uppercase tracking-wider font-semibold mt-1">
-            {person.role}
-          </p>
-        </div>
       </div>
-
-      {/* Info panel — white, tucked behind the image's curve, flows out on hover */}
-      <div className="hidden md:block relative z-10 -ml-6 h-full shrink-0 overflow-hidden rounded-r-3xl border border-l-0 border-border bg-white shadow-card w-0 transition-[width] duration-500 ease-out group-hover:w-90">
-        <div className="w-90 h-full pl-9 pr-7 py-7 flex flex-col items-start justify-start">
-          <span
-            className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-body font-semibold uppercase tracking-wider mb-4 w-fit ${roleBadgeStyles[person.role]}`}
-          >
-            {person.role}
-          </span>
-          <h3 className="font-display text-2xl font-bold text-foreground mb-3">{person.name}</h3>
-          <p className="font-body text-sm text-muted-foreground leading-relaxed">{person.bio}</p>
-        </div>
-      </div>
-    </div>
+      <figcaption className="font-display text-xl font-semibold text-foreground text-center mt-4">
+        {member.name}
+      </figcaption>
+    </figure>
   );
 }
 
@@ -183,44 +101,21 @@ export default function OurTeam() {
       <section className="py-20 bg-cream shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">
-              Leadership &amp; Governance
-            </p>
-            <h2 className="font-display text-4xl font-semibold text-foreground">Meet the Team</h2>
+            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-foreground">
+              Meet Our <span className="text-saffron">Team</span>
+            </h2>
           </div>
 
-          <div className="flex flex-col md:flex-row md:justify-center gap-6 md:gap-10 w-full">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
             {team.map((member) => (
-              <PersonCard key={member.name} person={member} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ambassadors */}
-      <section className="py-20 bg-cream-dark shadow-section">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">
-              Community Ambassadors
-            </p>
-            <h2 className="font-display text-4xl font-semibold text-foreground">Our Ambassadors</h2>
-          </div>
-
-          <div className="flex flex-col gap-6 md:gap-10">
-            {ambassadorRows.map((row, i) => (
-              <div key={i} className="flex flex-col md:flex-row md:justify-center gap-6 md:gap-10 w-full">
-                {row.map((ambassador) => (
-                  <PersonCard key={ambassador.name} person={ambassador} />
-                ))}
-              </div>
+              <MemberCard key={member.name} member={member} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Volunteers */}
-      <section className="py-20 bg-cream shadow-section">
+      <section className="py-20 bg-cream-dark shadow-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Volunteers</p>

@@ -28,6 +28,13 @@ describe("public/events.json", () => {
     expect(parsed.toISOString().slice(0, 10)).toBe(date);
   });
 
+  it("only uses an endDate that is a real date on or after the start date", () => {
+    for (const e of events.filter((e) => e.endDate)) {
+      expect(e.endDate, e.name).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(e.endDate! >= e.date, e.name).toBe(true);
+    }
+  });
+
   it("gives every event a unique slug, so ?event= deep links are unambiguous", () => {
     const slugs = events.map((e) => slugify(e.name));
     expect(new Set(slugs).size).toBe(slugs.length);
