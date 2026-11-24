@@ -4,7 +4,6 @@ export type Sponsor = {
   name: string;
   description: string;
   logo?: string;
-  url?: string;
 };
 
 export type Partner = {
@@ -42,7 +41,12 @@ export const partners: Partner[] = [
   {
     name: "Town of Ajax",
     description: "The Town of Ajax has recognized and supported HCCD's community celebrations.",
-    certificates: [],
+    certificates: [
+      {
+        src: "/event-photos/ajax-durham-diwali-festival/certificates/10.jpg",
+        caption: "Shaun Collier, Mayor of Ajax",
+      },
+    ],
   },
 ];
 

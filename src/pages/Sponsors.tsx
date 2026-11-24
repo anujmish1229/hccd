@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Award, ExternalLink } from "lucide-react";
+import { Award } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { sponsors } from "@/lib/supporters";
 
@@ -27,16 +27,6 @@ export default function Sponsors() {
                 )}
                 <h2 className="font-display text-2xl font-semibold text-foreground mb-3">{s.name}</h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">{s.description}</p>
-                {s.url && (
-                  <a
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-1.5 text-saffron font-body font-semibold text-sm hover:underline"
-                  >
-                    Visit website <ExternalLink size={13} />
-                  </a>
-                )}
               </article>
             ))}
           </div>

@@ -180,7 +180,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
                       src={cert.src}
                       alt={`Certificate from ${cert.caption}`}
                       loading="lazy"
-                      className="w-full aspect-3/4 object-cover rounded-lg border border-border group-hover:shadow-warm transition-shadow"
+                      className="w-full aspect-3/4 object-contain bg-white p-1.5 rounded-lg border border-border group-hover:shadow-warm transition-shadow"
                     />
                     <span className="block font-body text-xs text-muted-foreground mt-1.5 leading-snug">{cert.caption}</span>
                   </button>
