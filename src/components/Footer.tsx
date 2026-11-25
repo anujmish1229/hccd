@@ -57,6 +57,14 @@ export default function Footer() {
           <p className="font-body text-xs text-cream/40 mt-2">
             © {new Date().getFullYear()} HCCD · All rights reserved
           </p>
+          <a
+            href="https://anujmishra.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-body text-[11px] text-cream/30 hover:text-cream/60 transition-colors -mt-2.5"
+          >
+            Site by Anuj Mishra
+          </a>
         </div>
 
         {/* Up arrow */}
