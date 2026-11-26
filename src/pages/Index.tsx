@@ -45,13 +45,13 @@ export default function Index() {
       {/* ── Hero ─────────────────────────────────────── */}
       {/* The drone photo's own near-black sky is the section background, and its
           edges fade into it, so the Om glows out of the page with no frame. */}
-      <section className="relative overflow-hidden bg-[#120b05] text-cream">
+      <section className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-[#120b05] text-cream lg:block">
         <div className="relative h-72 sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[62%]" aria-hidden>
           <img src={heroDrone} alt="" className="hero-fade w-full h-full object-cover object-[44%_center]" />
         </div>
         <div className="hidden lg:block xl:hidden absolute inset-y-0 left-0 w-3/5 bg-linear-to-r from-[#120b05] via-[#120b05]/80 to-transparent" aria-hidden />
 
-        <div className="relative container mx-auto px-6 pb-16 -mt-8 lg:mt-0 lg:py-28 lg:min-h-[600px] flex items-center">
+        <div className="relative container mx-auto px-6 pb-16 -mt-8 lg:mt-0 lg:py-20 lg:min-h-[calc(100svh-4rem)] flex flex-1 items-center">
           <div className="max-w-2xl animate-fade-in-left">
             <h1 className="font-display text-6xl sm:text-7xl xl:text-[5.5rem] font-bold leading-[0.92] tracking-tight mb-6">
               <span className="lg:whitespace-nowrap">Hindu Community</span>{" "}
