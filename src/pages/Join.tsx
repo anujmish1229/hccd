@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { CheckCircle, Heart } from "lucide-react";
-import mandala from "@/assets/mandala.png";
-import community from "@/assets/community.jpg";
+import { Heart } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import garba from "@/assets/photo-garba.jpg";
 
 export default function Join() {
   const [submitted, setSubmitted] = useState(false);
@@ -36,37 +36,26 @@ export default function Join() {
   };
 
   return (
-    <main className="pt-[65px]">
-      {/* ── Page Header ─────────────────────────────── */}
-      <section className="relative overflow-hidden">
-        <img src={community} alt="HCCD community" className="absolute inset-0 w-full h-full object-cover opacity-20" />
-        <div className="relative z-10 bg-linear-to-br from-cream-dark via-cream to-cream py-24">
-          <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
-          <div className="container mx-auto px-6 relative z-10">
-            <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Be Part of Something Beautiful</p>
-            <h1 className="font-display text-5xl sm:text-6xl font-bold text-foreground mb-4">
-              Join <span className="text-saffron">HCCD</span>
-            </h1>
-            <div className="w-16 h-1 rounded bg-gold mb-6" />
-            <p className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Become a member of our growing family. Whether you want to volunteer, attend events, or simply connect
-              with the community, there's a place for you at HCCD.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main className="pt-16">
+      <PageHeader
+        title={<>Join <span className="text-saffron">HCCD</span></>}
+        image={garba}
+        imageAlt="Families dancing Garba at HCCD's Navratri Garba Night"
+      >
+        Become a member of our growing family. Whether you want to volunteer, attend events, or simply connect
+        with the community, there's a place for you at HCCD.
+      </PageHeader>
 
       {/* ── Benefits ────────────────────────────────── */}
-      <section className="py-16 bg-cream-dark shadow-section">
+      <section className="py-16 bg-cream-dark">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto text-center">
             {[
-              { icon: "🎉", title: "Event Access", desc: "Priority access to all HCCD festivals, workshops, and cultural programs." },
-              { icon: "🤝", title: "Community", desc: "Connect with hundreds of families who share your values and heritage." },
-              { icon: "❤️", title: "Make a Difference", desc: "Volunteer and contribute to meaningful service in the Durham community." },
+              { title: "Event Access", desc: "Hear first about our festivals, workshops, trips and cultural programs." },
+              { title: "Community", desc: "Connect with families across Durham Region who share your values and heritage." },
+              { title: "Make a Difference", desc: "Volunteer and contribute to meaningful service in the Durham community." },
             ].map((b) => (
-              <div key={b.title} className="bg-card rounded-2xl p-6 border border-border shadow-card">
-                <span className="text-3xl block mb-3">{b.icon}</span>
+              <div key={b.title} className="bg-card rounded-lg p-6 border border-border shadow-card">
                 <h3 className="font-display text-xl font-semibold text-foreground mb-2">{b.title}</h3>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
               </div>
@@ -76,11 +65,10 @@ export default function Join() {
       </section>
 
       {/* ── Join Form ───────────────────────────────── */}
-      <section className="py-20 bg-cream shadow-section">
+      <section className="py-20 bg-cream">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Membership Application</p>
               <h2 className="font-display text-4xl font-semibold text-foreground mb-3">Tell Us About Yourself</h2>
               <p className="font-body text-muted-foreground">
                 Fill out the form below and a member of our team will reach out to welcome you.
@@ -88,12 +76,9 @@ export default function Join() {
             </div>
 
             {submitted ? (
-              <div className="bg-card border border-border rounded-3xl p-12 text-center shadow-card animate-scale-in">
-                <div className="w-20 h-20 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center mx-auto mb-5">
-                  <CheckCircle className="w-10 h-10 text-saffron" />
-                </div>
+              <div className="bg-card border border-border rounded-lg p-12 text-center shadow-card animate-scale-in">
                 <h3 className="font-display text-3xl font-semibold text-foreground mb-3">
-                  Welcome to HCCD! 🙏
+                  Welcome to HCCD!
                 </h3>
                 <p className="font-body text-muted-foreground leading-relaxed mb-2">
                   Thank you for joining our family. We're thrilled to have you with us.
@@ -101,11 +86,7 @@ export default function Join() {
                 <p className="font-body text-muted-foreground text-sm">
                   One of our team members will reach out to you soon with next steps.
                 </p>
-                <div className="mt-6 flex items-center justify-center gap-2 text-saffron font-display text-lg italic">
-                  <Heart size={18} className="fill-saffron" />
-                  Vasudhaiva Kutumbakam
-                  <Heart size={18} className="fill-saffron" />
-                </div>
+                <p className="mt-6 text-saffron font-display text-lg italic">Vasudhaiva Kutumbakam</p>
                 <button
                   onClick={() => { setSubmitted(false); setForm({ fullName: "", email: "", phone: "", about: "" }); }}
                   className="mt-8 font-body text-sm text-saffron underline underline-offset-2 hover:text-saffron-dark"
@@ -120,7 +101,7 @@ export default function Join() {
                 data-netlify="true"
                 netlify-honeypot="bot-field"
                 onSubmit={handleSubmit}
-                className="bg-card border border-border rounded-3xl p-8 sm:p-10 shadow-card space-y-6"
+                className="bg-card border border-border rounded-lg p-8 sm:p-10 shadow-card space-y-6"
               >
                 <input type="hidden" name="form-name" value="hccd-join" />
                 <p className="hidden">
@@ -194,7 +175,7 @@ export default function Join() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-md hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Heart size={16} />
                   {submitting ? "Submitting..." : "Join HCCD"}
@@ -206,18 +187,6 @@ export default function Join() {
               </form>
             )}
           </div>
-        </div>
-      </section>
-
-      {/* ── Closing quote ───────────────────────────── */}
-      <section className="bg-brown py-16 text-center shadow-section">
-        <div className="container mx-auto px-6">
-          <p className="font-display text-3xl sm:text-4xl text-cream font-medium italic mb-3">
-            "वसुधैव कुटुम्बकम्"
-          </p>
-          <p className="font-body text-gold/80 text-sm uppercase tracking-widest">
-            The World Is One Family — Join Ours
-          </p>
         </div>
       </section>
     </main>

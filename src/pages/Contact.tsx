@@ -1,25 +1,22 @@
 import { useState } from "react";
 import { Send, CheckCircle, MessageCircle } from "lucide-react";
-import mandala from "@/assets/mandala.png";
+import PageHeader from "@/components/PageHeader";
 
 const WHATSAPP_GROUPS = [
   {
     label: "General Volunteers",
     description: "Help us run our events and make a difference in the community",
     link: "https://chat.whatsapp.com/Buy1nM95TYJ0ljNQpYbPQt",
-    emoji: "🏡",
   },
   {
     label: "Events & Updates",
     description: "Get notified about upcoming events",
     link: "https://chat.whatsapp.com/CCPwog8RCW0DBF9yUivG3q",
-    emoji: "🎉",
   },
   {
     label: "Youth Volunteers",
     description: "Connect with other youth volunteers in the community  ",
     link: "https://chat.whatsapp.com/CCPwog8RCW0DBF9yUivG3q",
-    emoji: "🙂",
   },
 ];
 
@@ -53,24 +50,13 @@ export default function Contact() {
   };
 
   return (
-    <main className="pt-[65px]">
-      {/* Header */}
-      <section className="bg-cream-dark py-20 relative overflow-hidden">
-        <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
-        <div className="container mx-auto px-6 relative z-10">
-          <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">We'd Love to Hear From You</p>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-foreground mb-4">
-            Get in <span className="text-saffron">Touch</span>
-          </h1>
-          <div className="w-16 h-1 rounded bg-gold mb-6" />
-          <p className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Have a question, a partnership idea, or just want to say hello? Fill out the form below and we'll get back to you soon.
-          </p>
-        </div>
-      </section>
+    <main className="pt-16">
+      <PageHeader title={<>Get in <span className="text-saffron">touch</span></>}>
+        Have a question, a partnership idea, or just want to say hello? Fill out the form below and we'll get back to you soon.
+      </PageHeader>
 
       {/* Contact section */}
-      <section className="py-20 bg-cream shadow-section">
+      <section className="py-20 bg-cream">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
             {/* Left: info */}
@@ -78,11 +64,10 @@ export default function Contact() {
               <div>
                 <h2 className="font-display text-3xl font-semibold text-foreground mb-6">Contact Information</h2>
                 {[
-                  { label: "Email", value: "info@hccd.ca", icon: "✉️" },
-                  { label: "Location", value: "Ajax, Ontario", icon: "📍" },
+                  { label: "Email", value: "info@hccd.ca" },
+                  { label: "Location", value: "Ajax, Ontario" },
                 ].map((item) => (
-                  <div key={item.label} className="flex gap-4 items-start mb-5">
-                    <span className="text-2xl mt-0.5">{item.icon}</span>
+                  <div key={item.label} className="mb-5">
                     <div>
                       <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-0.5">{item.label}</p>
                       <p className="font-body text-foreground font-medium">{item.value}</p>
@@ -93,25 +78,25 @@ export default function Contact() {
 
               {/* Social */}
               <div className="border-t border-border pt-6">
-                <p className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-4">Follow Us</p>
-                <div className="flex gap-4">
+                <p className="font-body text-xs font-semibold text-foreground/60 mb-4">Follow us</p>
+                <div className="flex gap-6">
                   <a href="https://www.instagram.com/hinducommunitycentre/" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
-                    IG
+                    className="font-body text-sm font-semibold text-saffron underline underline-offset-4 decoration-saffron/30 hover:decoration-saffron transition-colors">
+                    Instagram
                   </a>
                   <a href="https://www.facebook.com/share/1HjovQc5h3/" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
-                    FB
+                    className="font-body text-sm font-semibold text-saffron underline underline-offset-4 decoration-saffron/30 hover:decoration-saffron transition-colors">
+                    Facebook
                   </a>
                   <a href="https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-saffron/10 border border-saffron/20 flex items-center justify-center text-saffron hover:bg-saffron hover:text-primary-foreground transition-colors text-sm font-semibold">
-                    EB
+                    className="font-body text-sm font-semibold text-saffron underline underline-offset-4 decoration-saffron/30 hover:decoration-saffron transition-colors">
+                    Eventbrite
                   </a>
                 </div>
               </div>
 
               {/* Decorative quote */}
-              <div className="bg-saffron/8 border border-saffron/15 rounded-2xl p-6">
+              <div className="bg-saffron/8 border border-saffron/15 rounded-lg p-6">
                 <p className="font-display text-xl italic text-foreground leading-relaxed">
                   "अतिथि देवो भव"
                 </p>
@@ -124,11 +109,11 @@ export default function Contact() {
             {/* Right: form */}
             <div className="lg:col-span-3">
               {submitted ? (
-                <div className="bg-card border border-border rounded-3xl p-12 text-center shadow-card">
+                <div className="bg-card border border-border rounded-lg p-12 text-center shadow-card">
                   <CheckCircle className="w-16 h-16 text-saffron mx-auto mb-4" />
                   <h3 className="font-display text-3xl font-semibold text-foreground mb-3">Message Sent!</h3>
                   <p className="font-body text-muted-foreground">
-                    Thank you for reaching out. We'll get back to you within 2–3 business days. 🙏
+                    Thank you for reaching out. We'll get back to you within 2–3 business days.
                   </p>
                   <button
                     onClick={() => { setSubmitted(false); setForm({ name: "", contact: "", message: "" }); }}
@@ -144,7 +129,7 @@ export default function Contact() {
                   data-netlify="true"
                   netlify-honeypot="bot-field"
                   onSubmit={handleSubmit}
-                  className="bg-card border border-border rounded-3xl p-8 sm:p-10 shadow-card space-y-6"
+                  className="bg-card border border-border rounded-lg p-8 sm:p-10 shadow-card space-y-6"
                 >
                   <input type="hidden" name="form-name" value="hccd-contact" />
                   <p className="hidden">
@@ -202,7 +187,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-md hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <Send size={16} />
                     {submitting ? "Sending..." : "Send Message"}
@@ -215,13 +200,9 @@ export default function Contact() {
       </section>
 
       {/* WhatsApp Community */}
-      <section className="py-16 bg-cream-dark shadow-section">
+      <section className="py-16 bg-cream-dark">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center mb-10">
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <MessageCircle className="w-6 h-6 text-saffron" />
-              <p className="font-body text-xs uppercase tracking-widest text-saffron">Stay Connected</p>
-            </div>
             <h2 className="font-display text-3xl sm:text-4xl font-semibold text-foreground mb-4">
               Join Our WhatsApp Community
             </h2>
@@ -237,9 +218,8 @@ export default function Contact() {
                 href={group.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full sm:w-[278px] shrink-0 flex-col items-center gap-3 bg-card border border-border rounded-2xl p-6 hover:border-saffron/40 hover:shadow-warm hover:-translate-y-0.5 transition-all duration-200 shadow-card group"
+                className="flex w-full sm:w-[278px] shrink-0 flex-col items-center gap-3 bg-card border border-border rounded-lg p-6 hover:border-saffron/40 hover:shadow-warm hover:-translate-y-0.5 transition-all duration-200 shadow-card group"
               >
-                <span className="text-4xl">{group.emoji}</span>
                 <div className="text-center">
                   <p className="font-display text-lg font-semibold text-foreground group-hover:text-saffron transition-colors">
                     {group.label}

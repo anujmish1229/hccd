@@ -1,241 +1,279 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import heroDrone from "@/assets/hero-diwali-drone.jpg";
-import community from "@/assets/community.jpg";
-import mandala from "@/assets/mandala.png";
-import { type EventType, fetchEvents, splitEvents, slugify, formatShortEventDate } from "@/lib/events";
+import garba from "@/assets/photo-garba.jpg";
+import flagRaising from "@/assets/photo-flag-raising.jpg";
+import seniorsNiagara from "@/assets/photo-seniors-niagara.jpg";
+import yogaDay from "@/assets/photo-yoga-day.jpg";
+import { type EventType, slugify, formatShortEventDate } from "@/lib/events";
+import { useEvents } from "@/lib/useEvents";
+import { impactFacts, FIRST_EVENT } from "@/lib/impact";
+import { partners, sponsors } from "@/lib/supporters";
 
-const overviewCards = [
-  {
-    title: "About Us",
-    description: "A vibrant community rooted in Hindu values, celebrating culture, spirituality, and togetherness.",
-    link: "/about",
-    icon: "🪔",
-  },
-  {
-    title: "Our Team",
-    description: "Meet the dedicated volunteers who give their time and heart to build an inclusive community for all.",
-    link: "/team",
-    icon: "🤝",
-  },
-  {
-    title: "Get in Touch",
-    description: "Have questions or want to collaborate? Reach out to us anytime, we'd love to hear from you.",
-    link: "/contact",
-    icon: "✉️",
-  },
-  {
-    title: "Join HCCD",
-    description: "Become part of our family. Volunteer, participate, and help us grow our community in Durham.",
-    link: "/join",
-    icon: "🌸",
-  },
+const toDate = (s: string) => new Date(`${s}T00:00:00`);
+
+function DateBlock({ event }: { event: EventType }) {
+  const d = toDate(event.date);
+  return (
+    <div className="w-20 shrink-0 text-center border-r border-border pr-5">
+      <p className="font-body text-xs font-semibold text-saffron-dark uppercase">
+        {d.toLocaleDateString("en-CA", { month: "short" })}
+      </p>
+      <p className="font-display text-5xl font-bold text-foreground leading-none">{d.getDate()}</p>
+    </div>
+  );
+}
+
+const community = [
+  { src: garba, alt: "Families dancing Garba in traditional dress", caption: "Navratri Garba Night, October 2026", slug: "navratri-garba-night" },
+  { src: flagRaising, alt: "Community members holding Indian and Canadian flags", caption: "Independence Day flag raising, Ajax", slug: "indian-independence-day-flag-raising" },
+  { src: seniorsNiagara, alt: "Seniors walking by the gardens at Niagara Falls", caption: "Seniors' trip to Niagara Falls", slug: "trip-to-niagara-falls-for-seniors" },
+  { src: yogaDay, alt: "Group photo on the grass after International Yoga Day", caption: "International Yoga Day, Paulynn Park", slug: "international-yoga-day-celebration" },
+];
+
+const ways = [
+  { title: "Come to an event", text: "Festivals, trips and workshops across Ajax, Pickering and the rest of Durham Region.", to: "/events", cta: "See the calendar" },
+  { title: "Join and volunteer", text: "Help plan, set up and run our events, or join one of our WhatsApp groups to stay in the loop.", to: "/join", cta: "Join HCCD" },
+  { title: "Give", text: "Donations help cover the cost of our festivals, seniors' trips and community programs.", to: "/donate", cta: "Donate" },
 ];
 
 export default function Index() {
-  const [nextEvent, setNextEvent] = useState<EventType | null>(null);
-
-  useEffect(() => {
-    fetchEvents()
-      .then((events) => {
-        const { upcoming } = splitEvents(events);
-        setNextEvent(upcoming[0] ?? null);
-      })
-      .catch((err) => console.error("Error loading events:", err));
-  }, []);
+  const { loaded, upcoming, past } = useEvents();
+  const nextEvents = upcoming.slice(0, 3);
 
   return (
-    <main id="top">
+    <main id="top" className="pt-16">
       {/* ── Hero ─────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center hero-pattern overflow-hidden">
-        {/* Subtle background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          aria-hidden
-        />
+      {/* The drone photo's own near-black sky is the section background, and its
+          edges fade into it, so the Om glows out of the page with no frame. */}
+      <section className="relative overflow-hidden bg-[#120b05] text-cream">
+        <div className="relative h-72 sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[62%]" aria-hidden>
+          <img src={heroDrone} alt="" className="hero-fade w-full h-full object-cover object-[44%_center]" />
+        </div>
+        <div className="hidden lg:block xl:hidden absolute inset-y-0 left-0 w-3/5 bg-linear-to-r from-[#120b05] via-[#120b05]/80 to-transparent" aria-hidden />
 
-        <div className="container mx-auto px-6 pt-28 pb-20 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: text */}
-            <div className="animate-fade-in-left">
-              {/* Upcoming event announcement pill */}
-              {nextEvent && (
-                <Link
-                  to={`/events?event=${slugify(nextEvent.name)}`}
-                  className="inline-flex items-center gap-2 bg-saffron/10 border border-saffron/30 text-saffron font-body text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-5 hover:bg-saffron/20 transition-colors"
-                >
-                  <span className="w-2 h-2 rounded-full bg-saffron animate-pulse shrink-0" />
-                  Upcoming: {nextEvent.name} · {formatShortEventDate(nextEvent)}
-                </Link>
-              )}
-
-              {/* Devanagari ornament */}
-              {!nextEvent && (
-                <span className="inline-block text-saffron text-3xl mb-4 opacity-80">ॐ</span>
-              )}
-
-              <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold text-foreground leading-[1.08] sm:leading-none mb-4">
-                Hindu Community
-                <br />
-                <span className="text-saffron">Center of Durham</span>
-              </h1>
-
-              <p className="font-display italic text-2xl sm:text-3xl text-muted-foreground mb-2">
-                Vasudhaiva Kutumbakam
-              </p>
-              <p className="font-body text-sm text-gold tracking-widest uppercase mb-8">
-                - The World Is One Family
-              </p>
-
-              <p className="font-body text-lg text-foreground/75 leading-relaxed mb-10 max-w-lg">
-                Celebrating the richness of Hindu heritage, fostering community bonds, and
-                creating a welcoming home for all.
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  to="/join"
-                  className="inline-flex items-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron-dark transition-all duration-200 shadow-warm hover:shadow-lg"
-                >
-                  Join Our Community
-                </Link>
-                <Link
-                  to="/events"
-                  className="inline-flex items-center gap-2 border-2 border-saffron text-saffron font-body font-semibold px-8 py-3.5 rounded-full hover:bg-saffron/10 transition-all duration-200"
-                >
-                  Upcoming Events
-                </Link>
-              </div>
+        <div className="relative container mx-auto px-6 pb-16 -mt-8 lg:mt-0 lg:py-28 lg:min-h-[600px] flex items-center">
+          <div className="max-w-2xl animate-fade-in-left">
+            <h1 className="font-display text-6xl sm:text-7xl xl:text-[5.5rem] font-bold leading-[0.92] tracking-tight mb-6">
+              <span className="lg:whitespace-nowrap">Hindu Community</span>{" "}
+              <span className="text-saffron lg:whitespace-nowrap">Centre of Durham</span>
+            </h1>
+            <p className="font-display italic text-2xl sm:text-3xl text-cream/75 mb-6">
+              Vasudhaiva Kutumbakam: the world is one family.
+            </p>
+            <p className="font-body text-lg text-cream/70 leading-relaxed mb-10 max-w-lg">
+              A non-profit celebrating Hindu heritage in Durham Region, with festivals, seniors' trips
+              and community service that welcome everyone.
+            </p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+              <Link
+                to="/join"
+                className="inline-flex items-center bg-saffron text-primary-foreground font-body font-semibold px-8 py-4 rounded-md hover:bg-saffron-light hover:text-night transition-colors"
+              >
+                Join our community
+              </Link>
+              <Link
+                to="/events"
+                className="font-body font-semibold text-cream underline underline-offset-[6px] decoration-gold decoration-2 hover:text-gold transition-colors"
+              >
+                Upcoming events →
+              </Link>
             </div>
+          </div>
+        </div>
 
-            {/* Right: image with translucent frame */}
-            <div className="relative animate-fade-in flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Decorative frame */}
-                <div className="absolute -inset-4 rounded-3xl border-2 border-saffron/20 rotate-2" />
-                <div className="absolute -inset-4 rounded-3xl border border-gold/30 -rotate-2" />
-                <img
-                  src={heroDrone}
-                  alt="Om and diya formed by drones at the HCCD Diwali drone show"
-                  className="relative w-full max-w-md lg:max-w-lg rounded-2xl object-cover object-[44%_center] bg-black shadow-[0_20px_60px_-10px_hsl(25_40%_12%/0.3)]"
-                  style={{ height: "440px" }}
-                />
-                {/* Translucent badge */}
-                <div className="absolute bottom-5 left-5 right-5 bg-brown/60 backdrop-blur-xs rounded-xl px-5 py-3 border border-cream/10">
-                  <p className="font-display text-cream/90 text-sm italic">
-                    "वसुधैव कुटुम्बकम्"
-                  </p>
-                  <p className="font-body text-gold/80 text-xs mt-0.5">The World Is One Family</p>
-                </div>
-              </div>
-            </div>
+        <p className="relative lg:absolute lg:right-6 lg:bottom-6 container mx-auto lg:w-auto px-6 lg:px-0 pb-8 lg:pb-0 font-body text-sm text-cream/60 lg:text-right lg:max-w-xs">
+          <span className="text-gold font-semibold">3,500+ people</span> watched Durham Region's first Diwali
+          drone show, October 24, 2026
+        </p>
+      </section>
+
+      {/* ── Coming up ────────────────────────────────── */}
+      <section className="bg-cream-dark">
+        <div className="container mx-auto px-6 py-16 sm:py-20 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <h2 className="font-display text-5xl font-bold text-foreground leading-none mb-4">Coming up</h2>
+            <p className="font-body text-foreground/70 mb-6 max-w-sm">
+              Everything on the HCCD calendar, from workshops at the library to the big festival nights.
+            </p>
+            <Link to="/events" className="font-body font-semibold text-saffron-dark hover:underline underline-offset-4">
+              Full calendar →
+            </Link>
+          </div>
+          <div className="lg:col-span-8">
+            {loaded && nextEvents.length === 0 && (
+              <p className="font-body text-foreground/70 border-t border-border pt-6">
+                New events are being planned. Follow us on Instagram to hear first.
+              </p>
+            )}
+            <ul className="divide-y divide-border border-y border-border">
+              {nextEvents.map((event) => (
+                <li key={event.name}>
+                  <Link
+                    to={`/events?event=${slugify(event.name)}`}
+                    className="group flex items-center gap-5 py-6 hover:bg-cream/60 transition-colors"
+                  >
+                    <DateBlock event={event} />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-display text-2xl sm:text-3xl font-semibold text-foreground group-hover:text-saffron-dark transition-colors leading-tight">
+                        {event.name}
+                      </h3>
+                      <p className="font-body text-sm text-foreground/60 mt-1">
+                        {event.endDate ? formatShortEventDate(event) : event.time}
+                        {event.location && <span className="block sm:inline sm:before:content-['_/_']">{event.location}</span>}
+                      </p>
+                    </div>
+                    <span className="hidden sm:block font-body text-2xl text-saffron group-hover:translate-x-1 transition-transform pr-2">
+                      →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* ── Divider ──────────────────────────────────── */}
-      <div className="lotus-divider py-6 text-2xl tracking-[1rem] shadow-section">
-        ✦ ✦ ✦
-      </div>
-
-      {/* ── Diwali drone show ────────────────────────── */}
-      <section className="bg-brown py-20 shadow-section">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
-            <div className="lg:col-span-2">
-              <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Ajax–Durham Diwali Festival 2026</p>
-              <h2 className="font-display text-4xl sm:text-5xl font-semibold text-cream mb-4 leading-tight">
-                Durham Region's First Diwali Drone Show
+      {/* ── Diwali feature + impact ──────────────────── */}
+      <section className="bg-night text-cream">
+        <div className="container mx-auto px-6 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-5">
+              <h2 className="font-display text-5xl sm:text-6xl font-bold leading-[0.95] mb-6">
+                Durham Region's first <span className="text-gold">Diwali drone show</span>
               </h2>
-              <p className="font-body text-cream/75 leading-relaxed mb-6">
-                On October 24, 2026, more than 3,500 people joined HCCD to celebrate the Festival of
-                Lights with live performances and a drone show that lit up the night sky.
+              <p className="font-body text-cream/75 leading-relaxed mb-8 max-w-md">
+                On October 24, 2026, the Ajax–Durham Diwali Festival brought more than 3,500 people
+                together for live performances and a drone show that lit up the night sky.
               </p>
-              <Link
-                to="/events?event=ajax-durham-diwali-festival"
-                className="inline-flex items-center gap-2 bg-gold text-brown font-body font-semibold px-7 py-3 rounded-full hover:bg-gold-light transition-colors"
-              >
-                Photos, Videos & Certificates
-              </Link>
-              <a
-                href="https://diwalifestdurham.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-gold/60 text-gold font-body font-semibold px-7 py-3 rounded-full hover:bg-gold/10 transition-colors mt-3 sm:mt-0 sm:ml-3"
-              >
-                Visit the Diwali Festival Site ↗
-              </a>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+                <Link
+                  to="/events?event=ajax-durham-diwali-festival"
+                  className="inline-flex items-center bg-gold text-night font-body font-semibold px-7 py-3.5 rounded-md hover:bg-gold-light transition-colors"
+                >
+                  Photos, videos and certificates
+                </Link>
+                <a
+                  href="https://diwalifestdurham.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-body font-semibold text-gold underline underline-offset-[6px] decoration-gold/40 hover:decoration-gold transition-colors"
+                >
+                  Festival site ↗
+                </a>
+              </div>
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-7">
               <video
-                src="/event-videos/ajax-durham-diwali-festival/drone-show-full.mp4"
-                poster="/event-videos/ajax-durham-diwali-festival/drone-show-full.jpg"
+                src="/event-videos/ajax-durham-diwali-festival/drone-show-crowd.mp4"
+                poster="/event-videos/ajax-durham-diwali-festival/drone-show-crowd.jpg"
                 controls
                 playsInline
                 preload="none"
-                aria-label="HCCD Diwali drone show video"
-                className="w-full aspect-video rounded-2xl bg-black shadow-[0_20px_60px_-10px_hsl(25_40%_5%/0.5)]"
+                aria-label="Crowd watching the HCCD Diwali drone show"
+                className="w-full aspect-video rounded-md bg-black ring-1 ring-cream/10"
               />
             </div>
           </div>
+
+          <dl className="grid grid-cols-2 lg:grid-cols-4 mt-16 border-t border-cream/15">
+            {impactFacts.map((f) => (
+              <div key={f.value} className="pt-6 pb-2 pr-6 lg:border-r border-cream/15 lg:[&:not(:first-child)]:pl-6">
+                <dt className="font-display text-5xl sm:text-6xl font-bold text-gold leading-none">{f.value}</dt>
+                <dd className="font-body text-sm text-cream/70 mt-3 max-w-[14rem]">{f.label}</dd>
+              </div>
+            ))}
+            <div className="pt-6 pb-2 lg:pl-6">
+              <dt className="font-display text-5xl sm:text-6xl font-bold text-gold leading-none">{loaded ? past.length : "–"}</dt>
+              <dd className="font-body text-sm text-cream/70 mt-3 max-w-[14rem]">community events since {FIRST_EVENT}</dd>
+            </div>
+          </dl>
         </div>
       </section>
 
-      {/* ── Overview Cards ───────────────────────────── */}
-      <section className="bg-cream py-20 shadow-section">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">What We Offer</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-foreground mb-4">
-              A Community Built on <em>Seva</em> & Belonging
-            </h2>
+      {/* ── In the community ─────────────────────────── */}
+      <section className="bg-cream">
+        <div className="container mx-auto px-6 py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <h2 className="font-display text-5xl font-bold text-foreground leading-none">In the community</h2>
+            <p className="font-body text-sm text-foreground/60">Photos from HCCD events in Durham Region</p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {overviewCards.map((card) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-4 md:h-[640px]">
+            {community.map((p, i) => (
               <Link
-                key={card.title}
-                to={card.link}
-                className="group bg-card rounded-2xl p-6 border border-border hover:border-saffron/40 shadow-card hover:shadow-warm transition-all duration-300 hover:-translate-y-1"
+                key={p.slug}
+                to={`/events?event=${p.slug}`}
+                className={`group flex flex-col ${i === 0 ? "sm:col-span-2 md:row-span-2" : i === 1 ? "sm:col-span-2" : ""}`}
               >
-                <span className="text-3xl mb-4 block">{card.icon}</span>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-2 group-hover:text-saffron transition-colors">
-                  {card.title}
-                </h3>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                  {card.description}
-                </p>
-                <span className="inline-block mt-4 text-xs font-body font-semibold text-saffron uppercase tracking-wider group-hover:translate-x-1 transition-transform">
-                  Learn more →
-                </span>
+                <div className="relative flex-1 min-h-56 overflow-hidden rounded-md">
+                  <img
+                    src={p.src}
+                    alt={p.alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                  />
+                </div>
+                <p className="font-body text-xs text-foreground/60 mt-2 group-hover:text-saffron-dark transition-colors">{p.caption}</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Community highlight ──────────────────────── */}
-      <section className="relative overflow-hidden shadow-section">
-        <img
-          src={community}
-          alt="HCCD community celebration"
-          className="w-full h-80 sm:h-96 object-cover"
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-brown/80 via-brown/50 to-transparent flex items-center">
-          <div className="container mx-auto px-6">
-            <p className="font-body text-xs uppercase tracking-widest text-gold mb-3">Durham Region</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-cream max-w-lg leading-tight sm:leading-none">
-              Celebrating Culture,<br />Building Community
+      {/* ── Get involved ─────────────────────────────── */}
+      <section className="bg-cream-dark">
+        <div className="container mx-auto px-6 py-20 grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-4">
+            <h2 className="font-display text-5xl font-bold text-foreground leading-none mb-4">
+              Be part of <em className="text-saffron">HCCD</em>
             </h2>
-            <p className="font-body text-cream/75 mt-4 max-w-md">
-              Join hundreds of families who celebrate festivals, learn yoga,
-              and give back through HCCD.
+            <p className="font-body text-foreground/70 max-w-sm">
+              There's a place for you, whether you have an evening or a whole season to give.
             </p>
-            <Link
-              to="/events"
-              className="inline-flex mt-6 items-center gap-2 bg-gold text-brown font-body font-semibold px-7 py-3 rounded-full hover:bg-gold-light transition-colors"
-            >
-              See Upcoming Events
+          </div>
+          <ol className="lg:col-span-5 border-t-2 border-foreground">
+            {ways.map((w, i) => (
+              <li key={w.title} className="grid grid-cols-[3rem_1fr] gap-x-2 py-6 border-b border-border">
+                <span className="font-display text-3xl font-bold text-saffron leading-none">{i + 1}</span>
+                <div>
+                  <h3 className="font-display text-2xl font-semibold text-foreground leading-tight">{w.title}</h3>
+                  <p className="font-body text-sm text-foreground/70 mt-1.5 mb-3">{w.text}</p>
+                  <Link to={w.to} className="font-body text-sm font-semibold text-saffron-dark hover:underline underline-offset-4">
+                    {w.cta} →
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <aside className="lg:col-span-3 bg-maroon text-cream rounded-md p-7 self-start">
+            <p className="font-body text-xs font-semibold text-gold mb-4">Supported by</p>
+            <ul className="space-y-2 font-display text-xl leading-snug">
+              {partners.map((p) => (
+                <li key={p.name}>{p.name}</li>
+              ))}
+              {sponsors.map((s) => (
+                <li key={s.name}>{s.name}</li>
+              ))}
+            </ul>
+            <div className="mt-6 pt-4 border-t border-cream/20 flex gap-5 font-body text-sm">
+              <Link to="/partners" className="text-gold hover:underline underline-offset-4">Partners →</Link>
+              <Link to="/sponsors" className="text-gold hover:underline underline-offset-4">Sponsors →</Link>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      {/* ── CTA band ─────────────────────────────────── */}
+      <section className="bg-gold">
+        <div className="container mx-auto px-6 py-16 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <h2 className="font-display text-5xl sm:text-6xl font-bold text-night leading-[0.95] max-w-2xl">
+            Help us light up Durham Region.
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/donate" className="font-body font-semibold bg-night text-cream px-7 py-3.5 rounded-md hover:bg-night-mid transition-colors">
+              Donate
+            </Link>
+            <Link to="/join" className="font-body font-semibold border-2 border-night text-night px-7 py-3 rounded-md hover:bg-night hover:text-cream transition-colors">
+              Volunteer with us
             </Link>
           </div>
         </div>

@@ -1,9 +1,10 @@
+import { Link } from "react-router";
 import { useState } from "react";
 import anujImg from "@/assets/anuj-mishra.jpg";
 import nidhiImg from "@/assets/nidhi-mishra.jpg";
 import mukeshImg from "@/assets/mukesh-mishra.jpg";
 import volunteersImg from "@/assets/volunteers.jpg";
-import mandala from "@/assets/mandala.png";
+import PageHeader from "@/components/PageHeader";
 
 type Member = {
   name: string;
@@ -45,7 +46,7 @@ function MemberCard({ member }: { member: Member }) {
 
   return (
     <figure className="group">
-      <div className="relative aspect-4/5 rounded-3xl overflow-hidden border border-border shadow-card bg-cream-dark transition-all duration-300 group-hover:shadow-warm group-hover:-translate-y-1">
+      <div className="relative aspect-4/5 rounded-lg overflow-hidden border border-border shadow-card bg-cream-dark transition-all duration-300 group-hover:shadow-warm group-hover:-translate-y-1">
         {!imgError ? (
           <img
             src={member.image}
@@ -61,7 +62,7 @@ function MemberCard({ member }: { member: Member }) {
             role="img"
           >
             <span className="font-display text-6xl font-semibold text-saffron/70">{initials(member.name)}</span>
-            <span className="font-body text-[11px] uppercase tracking-widest text-brown-mid/60">Photo coming soon</span>
+            <span className="font-body text-[11px] uppercase tracking-widest text-foreground/50">Photo coming soon</span>
           </div>
         )}
       </div>
@@ -74,39 +75,17 @@ function MemberCard({ member }: { member: Member }) {
 
 export default function OurTeam() {
   return (
-    <main className="pt-[65px]">
-      {/* Page Header */}
-      <section className="bg-cream-dark py-20 relative overflow-hidden">
-        <img
-          src={mandala}
-          alt=""
-          aria-hidden
-          className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none"
-        />
-        <div className="container mx-auto px-6 relative z-10">
-          <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">
-            The People Behind HCCD
-          </p>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-foreground mb-4">
-            Our <span className="text-saffron">Team</span>
-          </h1>
-          <div className="w-16 h-1 rounded bg-gold mb-6" />
-          <p className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            HCCD is powered by dedicated volunteers and leaders who give their time and heart to serve our community.
-          </p>
-        </div>
-      </section>
+    <main className="pt-16">
+      <PageHeader title={<>Our <span className="text-saffron">Team</span></>}>
+        HCCD is powered by dedicated volunteers and leaders who give their time and heart to serve our community.
+      </PageHeader>
 
       {/* Team */}
-      <section className="py-20 bg-cream shadow-section">
+      <section className="py-20 bg-cream">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-foreground">
-              Meet Our <span className="text-saffron">Team</span>
-            </h2>
-          </div>
+          <h2 className="font-display text-5xl font-bold text-foreground leading-none mb-12">Meet our team</h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 ">
             {team.map((member) => (
               <MemberCard key={member.name} member={member} />
             ))}
@@ -115,17 +94,16 @@ export default function OurTeam() {
       </section>
 
       {/* Volunteers */}
-      <section className="py-20 bg-cream-dark shadow-section">
+      <section className="py-20 bg-cream-dark">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Volunteers</p>
-            <h2 className="font-display text-4xl font-semibold text-foreground mb-4">Our Volunteers</h2>
-            <p className="font-body text-muted-foreground max-w-xl mx-auto">
+          <div className="mb-10 grid lg:grid-cols-12 gap-6 items-end">
+            <h2 className="lg:col-span-5 font-display text-5xl font-bold text-foreground leading-none">Our volunteers</h2>
+            <p className="lg:col-span-6 font-body text-foreground/70 max-w-xl">
               Our volunteers are the backbone of HCCD. Every event, every program, every smile is made possible by their dedication.
             </p>
           </div>
 
-          <div className="group relative rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_hsl(25_40%_12%/0.2)]">
+          <div className="group relative rounded-lg overflow-hidden shadow-[0_8px_40px_-8px_hsl(25_40%_12%/0.2)]">
             <img
               src={volunteersImg}
               alt="HCCD volunteers at a community event"
@@ -135,25 +113,23 @@ export default function OurTeam() {
               <span
                 key={v.name}
                 style={{ left: `${v.x}%`, top: `${v.y}%` }}
-                className="absolute -translate-x-1/2 -translate-y-full -mt-2 bg-brown/85 text-cream text-xs font-body font-semibold px-2.5 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                className="absolute -translate-x-1/2 -translate-y-full -mt-2 bg-night/90 text-cream text-xs font-body font-semibold px-2.5 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               >
                 {v.name}
               </span>
             ))}
           </div>
 
-          {/* Volunteer stats */}
-          <div className="grid grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto text-center">
-            {[
-              { value: "20+", label: "Active Volunteers" },
-              { value: "100+", label: "Hours Donated" },
-              { value: "5+", label: "Events Supported" },
-            ].map((s) => (
-              <div key={s.label} className="bg-card border border-border rounded-2xl p-6 shadow-card">
-                <p className="font-display text-4xl font-bold text-saffron">{s.value}</p>
-                <p className="font-body text-xs text-muted-foreground mt-1 uppercase tracking-wide">{s.label}</p>
-              </div>
-            ))}
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link
+              to="/join"
+              className="inline-flex items-center bg-saffron text-primary-foreground font-body font-semibold px-7 py-3.5 rounded-md hover:bg-saffron-dark transition-colors"
+            >
+              Volunteer with us
+            </Link>
+            <Link to="/contact" className="font-body font-semibold text-saffron-dark hover:underline underline-offset-4">
+              Join a WhatsApp group →
+            </Link>
           </div>
         </div>
       </section>

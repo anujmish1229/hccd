@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { Calendar, MapPin, ExternalLink, Clock, X, ChevronLeft, ChevronRight } from "lucide-react";
-import mandala from "@/assets/mandala.png";
 import Lightbox, { type LightboxImage } from "@/components/Lightbox";
 import { type EventType, slugify, fetchEvents, splitEvents, isEventPast, eventImages, formatEventDate } from "@/lib/events";
+import PageHeader from "@/components/PageHeader";
 
 function ImageCarousel({ images, onOpen }: { images: string[]; onOpen: (index: number) => void }) {
   const [current, setCurrent] = useState(0);
@@ -95,7 +95,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
         <Lightbox images={lightbox.images} startIndex={lightbox.index} onClose={() => setLightbox(null)} />
       )}
       <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -113,7 +113,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
 
         <div className="p-6">
           {isPast && (
-            <span className="inline-block bg-brown/80 text-cream text-xs font-body font-semibold px-3 py-1 rounded-full mb-3">
+            <span className="inline-block bg-night/85 text-cream text-xs font-body font-semibold px-3 py-1 rounded-full mb-3">
               Past Event
             </span>
           )}
@@ -194,7 +194,7 @@ function EventModal({ event, isPast, onClose }: { event: EventType; isPast: bool
               href={event.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-saffron-dark transition-colors shadow-warm"
+              className="inline-flex items-center justify-center gap-2 bg-saffron text-primary-foreground font-body font-semibold text-sm px-5 py-2.5 rounded-md hover:bg-saffron-dark transition-colors shadow-warm"
             >
               <ExternalLink size={14} />
               {isPast ? "View Details" : "Get Tickets"}
@@ -215,7 +215,7 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
       tabIndex={0}
       onClick={onOpen}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onOpen(); }}
-      className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-card border border-border hover:shadow-warm hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      className="flex flex-col bg-white rounded-lg overflow-hidden shadow-card border border-border hover:shadow-warm hover:-translate-y-1 transition-all duration-300 cursor-pointer"
     >
       <div className="relative w-full aspect-video bg-cream-dark overflow-hidden">
         {event.photo && !imgError ? (
@@ -231,7 +231,7 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
           </div>
         )}
         {isPast && (
-          <span className="absolute top-3 left-3 bg-brown/80 text-cream text-xs font-body font-semibold px-3 py-1 rounded-full backdrop-blur-xs">
+          <span className="absolute top-3 left-3 bg-night/85 text-cream text-xs font-body font-semibold px-3 py-1 rounded-full backdrop-blur-xs">
             Past Event
           </span>
         )}
@@ -274,7 +274,7 @@ function EventCard({ event, isPast, onOpen }: { event: EventType; isPast: boolea
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-1.5 bg-saffron text-primary-foreground font-body font-semibold text-xs px-4 py-2 rounded-full hover:bg-saffron-dark transition-colors shadow-warm shrink-0"
+              className="inline-flex items-center gap-1.5 bg-saffron text-primary-foreground font-body font-semibold text-xs px-4 py-2 rounded-md hover:bg-saffron-dark transition-colors shadow-warm shrink-0"
             >
               <ExternalLink size={12} />
               {isPast ? "Details" : "Get Tickets"}
@@ -330,7 +330,7 @@ export default function Events() {
   };
 
   return (
-    <main className="pt-[65px]">
+    <main className="pt-16">
       {selectedEvent && (
         <EventModal
           event={selectedEvent}
@@ -339,21 +339,11 @@ export default function Events() {
         />
       )}
 
-      <section className="bg-cream-dark py-20 relative overflow-hidden">
-        <img src={mandala} alt="" aria-hidden className="absolute right-10 top-1/2 -translate-y-1/2 w-72 opacity-10 pointer-events-none" />
-        <div className="container mx-auto px-6 relative z-10">
-          <p className="font-body text-xs uppercase tracking-widest text-saffron mb-3">Community Calendar</p>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-foreground mb-4">
-            <span className="text-saffron">Events</span>
-          </h1>
-          <div className="w-16 h-1 rounded bg-gold mb-6" />
-          <p className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            From festivals to workshops, HCCD brings the community together year-round.
-          </p>
-        </div>
-      </section>
+      <PageHeader title={<span className="text-saffron">Events</span>}>
+        From festivals to workshops, HCCD brings the community together year-round.
+      </PageHeader>
 
-      <section className="py-12 bg-cream shadow-section">
+      <section className="py-12 bg-cream">
         <div className="container mx-auto px-6">
           <div className="flex gap-2 mb-10 border-b border-border pb-4">
             {(["past", "upcoming"] as const).map((t) => (

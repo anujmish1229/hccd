@@ -53,9 +53,4 @@ export const partners: Partner[] = [
 /** E-transfer details shown on the Donate page. */
 export const donation = {
   etransferEmail: "hinducommunitycentre@gmail.com",
-  instructions: [
-    "Open Interac e-Transfer in your bank app and add hinducommunitycentre@gmail.com as the recipient.",
-    "Enter the amount you would like to donate.",
-    'In the message, write "Donation for HCCD" followed by your name.',
-  ],
 };

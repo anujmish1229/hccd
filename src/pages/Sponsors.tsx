@@ -1,30 +1,23 @@
 import { Link } from "react-router";
-import { Award } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { sponsors } from "@/lib/supporters";
 
 export default function Sponsors() {
   return (
-    <main className="pt-[65px]">
-      <PageHeader eyebrow="With Gratitude" title={<>Our <span className="text-saffron">Sponsors</span></>}>
+    <main className="pt-16">
+      <PageHeader title={<>Our <span className="text-saffron">Sponsors</span></>}>
         Our celebrations are made possible by local businesses who believe in culture, community and togetherness.
       </PageHeader>
 
-      <section className="py-20 bg-cream shadow-section">
+      <section className="py-20 bg-cream">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {sponsors.map((s) => (
               <article
                 key={s.name}
-                className="bg-card rounded-2xl p-8 border border-border shadow-card flex flex-col items-center text-center"
+                className="bg-card rounded-md p-10 border-t-4 border-saffron shadow-card flex flex-col items-center text-center"
               >
-                {s.logo ? (
-                  <img src={s.logo} alt={`${s.name} logo`} className="h-24 w-auto object-contain mb-6" />
-                ) : (
-                  <span className="w-16 h-16 rounded-full bg-saffron/10 text-saffron flex items-center justify-center mb-6">
-                    <Award size={30} />
-                  </span>
-                )}
+                {s.logo && <img src={s.logo} alt={`${s.name} logo`} className="h-24 w-auto object-contain mb-6" />}
                 <h2 className="font-display text-2xl font-semibold text-foreground mb-3">{s.name}</h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">{s.description}</p>
               </article>
@@ -35,7 +28,7 @@ export default function Sponsors() {
             <p className="font-body text-muted-foreground mb-4">Interested in sponsoring an HCCD event?</p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-saffron text-primary-foreground font-body font-semibold px-7 py-3 rounded-full hover:bg-saffron-dark transition-colors shadow-warm"
+              className="inline-flex items-center gap-2 bg-night text-cream font-body font-semibold px-7 py-3.5 rounded-md hover:bg-saffron transition-colors"
             >
               Get in Touch
             </Link>

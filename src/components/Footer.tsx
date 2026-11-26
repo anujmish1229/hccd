@@ -1,90 +1,115 @@
-import { ArrowUp } from "lucide-react";
-import { FacebookIcon, InstagramIcon } from "@/components/icons/BrandIcons";
+import { Link } from "react-router";
+import { donation } from "@/lib/supporters";
+
+const DIWALI_SITE = "https://diwalifestdurham.netlify.app/";
+
+const columns: { title: string; links: { label: string; to?: string; href?: string }[] }[] = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Home", to: "/" },
+      { label: "About HCCD", to: "/about" },
+      { label: "Our Team", to: "/team" },
+      { label: "Events", to: "/events" },
+      { label: "Partners", to: "/partners" },
+      { label: "Sponsors", to: "/sponsors" },
+    ],
+  },
+  {
+    title: "Get involved",
+    links: [
+      { label: "Join HCCD", to: "/join" },
+      { label: "Donate", to: "/donate" },
+      { label: "Contact us", to: "/contact" },
+      { label: "Durham Diwali Festival ↗", href: DIWALI_SITE },
+    ],
+  },
+  {
+    title: "Follow",
+    links: [
+      { label: "Instagram ↗", href: "https://www.instagram.com/hinducommunitycentre/" },
+      { label: "Facebook ↗", href: "https://www.facebook.com/share/1HjovQc5h3/" },
+      { label: "Eventbrite ↗", href: "https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781" },
+    ],
+  },
+];
 
 export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="bg-brown text-primary-foreground">
-      {/* Top row */}
-      <div className="container mx-auto px-6 py-8 flex items-start justify-between">
-        {/* Social links */}
-        <div className="flex flex-col gap-3">
-          <p className="font-body text-xs uppercase tracking-widest text-gold/70 mb-1">Connect With Us</p>
-          <div className="flex gap-4">
-            <a
-              href="https://www.instagram.com/hinducommunitycentre/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
-            >
-              <InstagramIcon size={18} />
-              <span className="hidden sm:inline">Instagram</span>
-            </a>
-            <a
-              href="https://www.eventbrite.com/o/hindu-community-centre-of-durham-hccd-114637567781"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Eventbrite"
-              className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
-            >
-              {/* Eventbrite icon (custom SVG) */}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.893 13.688H9.984v.008c.062 1.418 1.057 2.336 2.5 2.336 1.035 0 1.848-.426 2.324-1.188h2.906c-.664 2.094-2.555 3.375-5.25 3.375-3.313 0-5.586-2.227-5.586-5.484 0-3.211 2.273-5.484 5.531-5.484 3.313 0 5.508 2.36 5.508 5.484 0 .317-.023.624-.024.953zm-2.625-1.758c-.117-1.273-1.031-2.133-2.437-2.133-1.313 0-2.282.797-2.5 2.133h4.937z"/>
-              </svg>
-              <span className="hidden sm:inline">Eventbrite</span>
-            </a>
-            <a
-              href="https://www.facebook.com/share/1HjovQc5h3/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="flex items-center gap-2 text-cream/80 hover:text-gold transition-colors duration-200 font-body text-sm"
-            >
-              <FacebookIcon size={18} />
-              <span className="hidden sm:inline">Facebook</span>
-            </a>
+    <footer className="bg-night text-cream relative border-t-4 border-saffron">
+      <div className="container mx-auto px-6 pt-16 pb-10">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-12">
+          <div className="col-span-2 md:col-span-4">
+            <p className="font-display text-3xl sm:text-4xl leading-tight text-cream">
+              Vasudhaiva Kutumbakam.
+              <span className="block italic text-gold">The world is one family.</span>
+            </p>
+            <div className="mt-8 font-body text-sm text-cream/70 space-y-1">
+              <p>Ajax, Ontario</p>
+              <a href="mailto:info@hccd.ca" className="block text-cream hover:text-gold transition-colors">
+                info@hccd.ca
+              </a>
+              <p className="text-cream/50 pt-2">
+                e-Transfer donations: <span className="text-cream/80">{donation.etransferEmail}</span>
+              </p>
+            </div>
           </div>
-          <a
-            href="https://diwalifestdurham.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-body text-sm text-gold/90 hover:text-gold transition-colors"
-          >
-            Durham Diwali Festival ↗
-          </a>
-          <p className="font-body text-xs text-cream/40 mt-2">
-            © {new Date().getFullYear()} HCCD · All rights reserved
-          </p>
-          <a
-            href="https://anujmishra.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-body text-[11px] text-cream/30 hover:text-cream/60 transition-colors -mt-2.5"
-          >
-            Site by Anuj Mishra
-          </a>
-        </div>
 
-        {/* Up arrow */}
-        <button
-          onClick={scrollToTop}
-          aria-label="Back to top"
-          className="p-3 rounded-full border border-cream/20 text-cream/70 hover:border-gold hover:text-gold hover:bg-gold/10 transition-all duration-200"
-        >
-          <ArrowUp size={20} />
-        </button>
+          {columns.map((col, i) => (
+            <div key={col.title} className={i === 0 ? "md:col-span-2 md:col-start-7" : "md:col-span-2"}>
+              <p className="font-body text-xs font-semibold text-gold mb-4">{col.title}</p>
+              <ul className="space-y-2.5">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    {l.to ? (
+                      <Link to={l.to} className="font-body text-sm text-cream/80 hover:text-cream hover:underline underline-offset-4">
+                        {l.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-body text-sm text-cream/80 hover:text-cream hover:underline underline-offset-4"
+                      >
+                        {l.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Full-width org name */}
-      <div className="py-6 px-6 overflow-hidden">
-        <p
-          className="font-display font-bold text-cream/15 text-center whitespace-nowrap select-none"
-          style={{ fontSize: "min(5vw, 6rem)", letterSpacing: "0.05em" }}
-        >
-          Hindu Community Center of Durham
+      {/* Wordmark */}
+      <div className="container mx-auto px-6 pb-8" aria-hidden>
+        <p className="font-display font-bold leading-[0.95] tracking-tight select-none border-t border-cream/15 pt-8 text-[clamp(2.5rem,6.1vw,5.6rem)] lg:whitespace-nowrap">
+          <span className="text-cream">Hindu Community </span>
+          <span className="text-gold italic">Centre of Durham</span>
         </p>
+      </div>
+
+      <div className="border-t border-cream/10">
+        <div className="container mx-auto px-6 py-5 flex flex-col sm:flex-row gap-3 sm:items-center justify-between font-body text-xs text-cream/50">
+          <p>© {new Date().getFullYear()} Hindu Community Centre of Durham. A non-profit serving Durham Region.</p>
+          <div className="flex items-center gap-6">
+            <a
+              href="https://anujmishra.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cream/35 hover:text-cream/70 transition-colors"
+            >
+              Site by Anuj Mishra
+            </a>
+            <button onClick={scrollToTop} className="text-cream/70 hover:text-gold transition-colors">
+              Back to top ↑
+            </button>
+          </div>
+        </div>
       </div>
     </footer>
   );
