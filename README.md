@@ -4,8 +4,25 @@ Website for the **Hindu Community Centre of Durham**, a youth-founded community 
 
 **Live site:** https://hccd.ca
 
-![HCCD home page](docs/screenshot.png)
-<!-- TODO: add a 1280×800 screenshot of the home page at docs/screenshot.png -->
+![HCCD home page](docs/screenshots/home.jpg)
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/events.jpg" alt="HCCD events page"></td>
+    <td width="50%"><img src="docs/screenshots/about.jpg" alt="HCCD about page"></td>
+  </tr>
+  <tr>
+    <td align="center">Events</td>
+    <td align="center">About</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/screenshots/mobile-home.jpg" width="260" alt="Home on a phone"><br>Home on a phone</td>
+    <td align="center"><img src="docs/screenshots/mobile-events.jpg" width="260" alt="Events on a phone"><br>Events on a phone</td>
+  </tr>
+</table>
 
 ## Who it's for
 
