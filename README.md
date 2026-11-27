@@ -39,7 +39,8 @@ I founded HCCD and served as its president. I designed and built the website: th
 - **Events calendar** driven by a single `public/events.json` file. Events move from *Upcoming* to *Past* automatically once their day has ended.
 - **Shareable event links.** `/events?event=<slug>` opens that event's details directly.
 - **Join and contact forms** handled by Netlify Forms, with honeypot spam protection.
-- **Team and ambassadors** pages.
+- **Team and ambassadors** pages, plus sponsors, partners and donation pages.
+- **Short links** for big events: `/yoga` and `/garba` open those events directly.
 
 ## Tech stack
 
@@ -47,7 +48,7 @@ I founded HCCD and served as its president. I designed and built the website: th
 | ---------- | ----------------------------------------------------- |
 | Framework  | React 19 + TypeScript                                 |
 | Build tool | Vite 8                                                |
-| Routing    | React Router 7                                        |
+| Routing    | React Router 8                                        |
 | Styling    | Tailwind CSS 4 + shadcn/ui primitives (toast, tooltip) |
 | Testing    | Vitest 5, Testing Library, jsdom                      |
 | Hosting    | Netlify (auto-deploys from `main`)                    |
@@ -74,7 +75,8 @@ public/
   event-photos/          Event images
   ambassador-photos/     Ambassador headshots
 src/
-  App.tsx                Routes: /, /about, /team, /events, /contact, /join, 404
+  App.tsx                Routes: /, /about, /team, /events, /contact, /join, /sponsors,
+                         /partners, /donate, 404; /yoga and /garba redirect to their events
   pages/                 One component per route
   components/            Navbar, Footer, icons/, ui/ (shadcn)
   lib/events.ts          Event types, date logic, slugs
